@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryDark">@color/darkTeal</item>
         <item name="colorAccent">@color/orange</item>
+        <item name="popupTheme">@style/PopupTheme</item>
+    </style>
+
+    <style name="PopupTheme" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/darkTeal</item>
+        <item name="android:textColor">@color/orange</item>
     </style>
 
 </resources>
