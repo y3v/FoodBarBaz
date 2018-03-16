@@ -20,15 +20,17 @@
 
     <item android:title="Advanced Options"></item>
 
-    <menu>
-        <item
-            android:title="My Favourites"
-            android:id="@+id/about_us_drawer">
-        </item>
-        <item
-            android:title="Report"
-            android:id="@+id/report_drawer">
-        </item>
-    </menu>
+    <item android:title="advanced_options">
+        <menu>
+            <item
+                android:title="My Favourites"
+                android:id="@+id/about_us_drawer">
+            </item>
+            <item
+                android:title="Report"
+                android:id="@+id/report_drawer">
+            </item>
+        </menu>
+    </item>
 
 </menu>
