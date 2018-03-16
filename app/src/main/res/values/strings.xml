@@ -5,4 +5,9 @@
     <string name="title_notifications">Notifications</string>
     <string name="favourites">favourites</string>
     <string name="settings">settings</string>
+    <string name="showFavs">Favourites</string>
+    <string name="account">Account</string>
+    <string name="foodbarbaz_email">foodbarbaz@gmail.com</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="closed_drawer">Closed Drawer</string>
 </resources>
