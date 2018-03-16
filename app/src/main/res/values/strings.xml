@@ -10,4 +10,9 @@
     <string name="foodbarbaz_email">foodbarbaz@gmail.com</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="closed_drawer">Closed Drawer</string>
+    <string name="resteraunt_name">Resteraunt Name</string>
+    <string name="category">category</string>
+    <string name="address">address</string>
+    <string name="see_menu">see_menu</string>
+    <string name="see_on_map">see_on_map</string>
 </resources>
