@@ -58,7 +58,7 @@ public class RestaurantMenu extends AppCompatActivity {
             restaurant.setMenu(buildFakeMenu());
         }
         else {
-            restaurant = new Restaurant("789","LaLa", "783 rue Saint-Paul, QC, Quebec", "Cuisine quebecoise", "5", null);
+            restaurant = new Restaurant("Là Là","789", "783 rue Saint-Paul, QC, Quebec", null,"0", "5", "Cuisine quebecoise");
             restaurant.setMenu(buildFakeMenu());
         }
 

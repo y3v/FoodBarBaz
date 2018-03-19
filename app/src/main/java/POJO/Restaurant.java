@@ -3,8 +3,13 @@ package POJO;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,44 +18,37 @@ import java.util.List;
  */
 
 public class Restaurant implements Parcelable {
-    String placeId;
     String name;
+    String placeID;
     String address;
-    String category;
+    URL imageUrl;
+    String priceLevel;
     String rating;
-    Uri imageUri;
-
-    double latitude;
-    double longitude;
-
+    String category;
     // Where each key is a section like appetizers, main course, desserts, etc.
     HashMap<String, List<MenuItem>> menu;
 
 
-    public Restaurant(String placeId, String name, String address, String category, String rating, Uri imageUri) {
-        this.placeId = placeId;
+    public Restaurant(String name, String placeId, String address, URL imageUrl, String priceLevel, String rating, String category) {
         this.name = name;
+        this.placeID = placeId;
         this.address = address;
-        this.category = category;
+        this.imageUrl = imageUrl;
+        this.priceLevel = priceLevel;
         this.rating = rating;
-
-        if(imageUri == null || imageUri.equals(""))
-            this.imageUri = Uri.fromFile(new File("/src/res/drawable/restaurant_icon.bmp"));
-        else
-            this.imageUri = imageUri;
+        this.category = category;
 
         this.menu = new HashMap<>();
     }
 
     protected Restaurant(Parcel in) {
-        placeId = in.readString();
         name = in.readString();
+        placeID = in.readString();
         address = in.readString();
-        category = in.readString();
+        imageUrl = (URL)in.readValue(ClassLoader.getSystemClassLoader());
+        priceLevel = in.readString();
         rating = in.readString();
-        imageUri = in.readParcelable(Uri.class.getClassLoader());
-        latitude = in.readDouble();
-        longitude = in.readDouble();
+        category = in.readString();
         menu = in.readHashMap(ClassLoader.getSystemClassLoader());
     }
 
@@ -98,28 +96,21 @@ public class Restaurant implements Parcelable {
         this.rating = rating;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getPriceLevel() {
+        return priceLevel;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setPriceLevel(String priceLevel) {
+        this.priceLevel = priceLevel;
     }
 
-    public double getLongitude() {
-        return longitude;
+
+    public URL getImageUrl() {
+        return this.imageUrl;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Uri getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
+    public void setImageUrl(URL imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public HashMap<String, List<MenuItem>> getMenu() {
@@ -137,14 +128,27 @@ public class Restaurant implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(placeId);
         parcel.writeString(name);
+        parcel.writeString(placeID);
         parcel.writeString(address);
-        parcel.writeString(category);
+        parcel.writeValue(imageUrl);
+        parcel.writeString(priceLevel);
         parcel.writeString(rating);
-        parcel.writeParcelable(imageUri, i);
-        parcel.writeDouble(latitude);
-        parcel.writeDouble(longitude);
+        parcel.writeString(category);
         parcel.writeMap(menu);
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "name='" + name + '\'' +
+                ", placeID='" + placeID + '\'' +
+                ", address='" + address + '\'' +
+                ", imageUrl=" + imageUrl +
+                ", priceLevel='" + priceLevel + '\'' +
+                ", rating='" + rating + '\'' +
+                ", category='" + category + '\'' +
+                ", menu=" + menu +
+                '}';
     }
 }
