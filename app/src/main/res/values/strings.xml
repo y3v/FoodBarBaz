@@ -21,4 +21,5 @@
     <string name="todo">TODO</string>
     <string name="restaurants_around">Restaurants Near Me</string>
     <string name="testing">TESTING</string>
+    <string name="back">Back</string>
 </resources>

@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -65,11 +66,14 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
 
         name.setText(restaurant.getName());
         address.setText(restaurant.getAddress());
-        category.setText(restaurant.getCategory());
+        //category.setText(restaurant.getCategory());
         rating.setText(restaurant.getRating());
         //restaurantImage.setImageResource(restaurant.getPhoto());
         //Glide.with(restaurantView).load(restaurant.getPhoto()).into(restaurantImage);
-        Glide.with(restaurantView.getContext()).load(restaurant.getPhoto()).into(restaurantImage);
+        Glide.with(restaurantView.getContext())
+                .load(restaurant.getPhoto())
+                .placeholder(R.drawable.ic_home_black_24dp)
+                .into(restaurantImage);
 
         // map click listener
         seeMenu.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +87,14 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
             }
         });
 
+        restaurantImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialogBox(restaurant.getPhoto());
+                Log.e("DIALOG BOX", "CLICK ON PIC" );
+            }
+        });
+
         Log.e("IMAGEError!!!", restaurantImage.toString());
 
 
@@ -90,6 +102,49 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         restaurantImage.setMaxHeight(100);
 
         return restaurantView;
+    }
+
+  private void createDialogBox(String imageURI){
+       /* LayoutInflater inflater = LayoutInflater.from(getContext());
+        View dialogView = inflater.inflate(R.layout.image_popup, null);
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+        Button dismiss = dialogView.findViewById(R.id.dismissButton);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();*/
+
+      AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+      LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+      View mView = inflater.inflate(R.layout.image_popup, null);
+
+      Button dismiss = mView.findViewById(R.id.dismissButton);
+      ImageView bigPic = mView.findViewById(R.id.bigRestaurantPic);
+      Glide.with(bigPic.getContext())
+              .load(imageURI)
+              .placeholder(R.drawable.ic_home_black_24dp)
+              .into(bigPic);
+      bigPic.setMaxHeight(220);
+      bigPic.setMaxWidth(220);
+      mBuilder.setView(mView);
+      final AlertDialog dialog = mBuilder.create();
+
+
+
+      dismiss.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              dialog.dismiss();
+          }
+      });
+
+
+      dialog.show();
+
     }
 }
 
