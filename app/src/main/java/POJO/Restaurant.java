@@ -21,7 +21,7 @@ public class Restaurant implements Parcelable {
     String name;
     String placeID;
     String address;
-    URL imageUrl;
+    String photo;
     String priceLevel;
     String rating;
     String category;
@@ -29,11 +29,11 @@ public class Restaurant implements Parcelable {
     HashMap<String, List<MenuItem>> menu;
 
 
-    public Restaurant(String name, String placeId, String address, URL imageUrl, String priceLevel, String rating, String category) {
+    public Restaurant(String name, String placeId, String address, String imageUrl, String priceLevel, String rating, String category) {
         this.name = name;
         this.placeID = placeId;
         this.address = address;
-        this.imageUrl = imageUrl;
+        this.photo = imageUrl;
         this.priceLevel = priceLevel;
         this.rating = rating;
         this.category = category;
@@ -45,7 +45,7 @@ public class Restaurant implements Parcelable {
         name = in.readString();
         placeID = in.readString();
         address = in.readString();
-        imageUrl = (URL)in.readValue(ClassLoader.getSystemClassLoader());
+        photo = in.readString();
         priceLevel = in.readString();
         rating = in.readString();
         category = in.readString();
@@ -105,12 +105,12 @@ public class Restaurant implements Parcelable {
     }
 
 
-    public URL getImageUrl() {
-        return this.imageUrl;
+    public String getPhoto() {
+        return this.photo;
     }
 
-    public void setImageUrl(URL imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPhoto(String imageUrl) {
+        this.photo = imageUrl;
     }
 
     public HashMap<String, List<MenuItem>> getMenu() {
@@ -131,7 +131,7 @@ public class Restaurant implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(placeID);
         parcel.writeString(address);
-        parcel.writeValue(imageUrl);
+        parcel.writeValue(photo);
         parcel.writeString(priceLevel);
         parcel.writeString(rating);
         parcel.writeString(category);
@@ -144,7 +144,7 @@ public class Restaurant implements Parcelable {
                 "name='" + name + '\'' +
                 ", placeID='" + placeID + '\'' +
                 ", address='" + address + '\'' +
-                ", imageUrl=" + imageUrl +
+                ", imageUrl=" + photo +
                 ", priceLevel='" + priceLevel + '\'' +
                 ", rating='" + rating + '\'' +
                 ", category='" + category + '\'' +

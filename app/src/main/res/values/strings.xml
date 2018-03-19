@@ -11,14 +11,14 @@
     <string name="open_drawer">Open Drawer</string>
     <string name="closed_drawer">Closed Drawer</string>
     <string name="resteraunt_name">Resteraunt Name</string>
-    <string name="category">category</string>
-    <string name="address">address</string>
-    <string name="see_menu">see_menu</string>
-    <string name="see_on_map">see_on_map</string>
+    <string name="category">Category</string>
+    <string name="address">Address</string>
+    <string name="see_menu">See Menu</string>
+    <string name="see_on_map">See on Map </string>
     <string name="fav" />
     <string name="favoff" />
-    <string name="rating">rating</string>
+    <string name="rating">Rating</string>
     <string name="todo">TODO</string>
-    <string name="restaurants_around">Restaurants around</string>
+    <string name="restaurants_around">Restaurants Near Me</string>
     <string name="testing">TESTING</string>
 </resources>

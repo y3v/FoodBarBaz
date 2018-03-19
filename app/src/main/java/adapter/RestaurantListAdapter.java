@@ -18,7 +18,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.AsyncTask;
+import java.io.InputStream;
+import android.util.Log;
+import android.graphics.BitmapFactory;
+import android.content.res.Resources;
 
+//import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 import com.example.yev.foodbarbaz.HomePage;
 import com.example.yev.foodbarbaz.R;
 import com.example.yev.foodbarbaz.RestaurantMenu;
@@ -38,6 +45,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
     public RestaurantListAdapter(Context context, List<Restaurant> objects) {
         super(context, R.layout.restaurant_list_item, objects);
     }
+
 
     @Override
     public View getView(int i, View view, final ViewGroup viewGroup) {
@@ -59,7 +67,9 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         address.setText(restaurant.getAddress());
         category.setText(restaurant.getCategory());
         rating.setText(restaurant.getRating());
-        // restaurantImage.setImageResource(R.drawable.restaurant_icon);
+        //restaurantImage.setImageResource(restaurant.getPhoto());
+        //Glide.with(restaurantView).load(restaurant.getPhoto()).into(restaurantImage);
+        Glide.with(restaurantView.getContext()).load(restaurant.getPhoto()).into(restaurantImage);
 
         // map click listener
         seeMenu.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +83,13 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
             }
         });
 
+        Log.e("IMAGEError!!!", restaurantImage.toString());
+
+
+        restaurantImage.setMaxWidth(100);
+        restaurantImage.setMaxHeight(100);
+
         return restaurantView;
     }
 }
+
