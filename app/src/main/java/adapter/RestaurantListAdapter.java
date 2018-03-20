@@ -87,7 +87,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         name.setText(restaurant.getName());
         address.setText(restaurant.getAddress());
         //category.setText(restaurant.getCategory());
-        rating.setText(restaurant.getRating());
+        rating.setText(restaurant.getRating() + "/5");
 
         //GLIDE IS A LIBRARY THAT EASILY ALLOWS ONE TO EXTRACT BITMAPS FROM URL
         //if there is a problem extractng, a placeholder is declared
@@ -96,7 +96,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
                 .placeholder(R.drawable.ic_home_black_24dp)
                 .into(restaurantImage);
 
-        // map click listener
+        // see menu click listener
         seeMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +104,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
                 intent.putExtra("restaurant", restaurant);
 
                 view.getContext().startActivity(intent);
-                Toast.makeText(view.getContext(), "henlo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "To -> " + restaurant.getName() + " menu", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -119,7 +119,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         Log.e("IMAGEError!!!", restaurantImage.toString());
 
 
-        restaurantImage.setMaxWidth(150);
+        // restaurantImage.setMaxWidth(150);
         restaurantImage.setMaxHeight(150);
 
         return restaurantView;

@@ -27,4 +27,8 @@
     <string name="report">Report</string>
     <string name="my_history">My History</string>
     <string name="application_settings">Application Settings</string>
+    <string name="postal_code_address_city">Postal Code / Address / City</string>
+    <string name="scan_your_area">Scan your area!</string>
+    <string name="foodbarbaz_logo">FoodBarBaz logo</string>
+    <string name="search">Search</string>
 </resources>

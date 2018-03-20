@@ -43,12 +43,18 @@ public class NearbyRestaurantList extends AppCompatActivity {
     private View mProgressView;
     private List<Restaurant> restaurants =  new ArrayList<Restaurant>();
     private boolean isTitleVisible = false;
-
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // restaurants.add(new Restaurant("123","food", "1272 de la chevrotiere", "Home", "5.0", null));
-        // restaurants.add(new Restaurant("456","barbaz", "1272 de la gauchetiere", "Home foodz", "5.0", null));
+        Bundle data = getIntent().getExtras();
+
+        if (data != null){
+            if (data.keySet().contains("query"))
+                query = (String) data.get("query");
+            else
+                query = "H2M 1M2";
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_restaurant_list);
@@ -112,6 +118,7 @@ public class NearbyRestaurantList extends AppCompatActivity {
 
         toggle.syncState();
 
+        // Queries the webservice
         WebserviceOperations webserviceOperations = new WebserviceOperations() {
             @Override
             public void onBackgroundTaskCompleted(List<Object> objects) {
@@ -124,7 +131,7 @@ public class NearbyRestaurantList extends AppCompatActivity {
         };
 
         showProgress(true);
-        webserviceOperations.execute("h3C0E9");
+        webserviceOperations.execute(query);
         showProgress(false);
 
         for (int i = 0; i < restaurants.size(); i++) {
@@ -167,10 +174,6 @@ public class NearbyRestaurantList extends AppCompatActivity {
 
     public List<Restaurant> getRestaurants() {
         return restaurants;
-    }
-
-    public void setRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)

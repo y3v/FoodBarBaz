@@ -19,8 +19,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/restaurant_name"
@@ -33,77 +33,58 @@
                 android:layout_weight="1"
                 android:text="@string/resteraunt_name"
                 android:textAlignment="center"
-                android:textSize="25sp" />
+                android:textColor="@color/darkGrey"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageRestaurant"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/todo"
+                android:cropToPadding="true"
                 android:maxHeight="100dp"
                 android:maxWidth="100dp"
-                app:srcCompat="@drawable/ic_home_black_24dp"
-                android:layout_gravity="center"/>
+                app:srcCompat="@drawable/ic_home_black_24dp" />
 
         </LinearLayout>
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:padding="5dp">
 
-            <TableRow>
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/address"
-                    android:layout_weight="4"
-                    android:singleLine="false"
-                    />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="14"
+                android:singleLine="false"
+                android:text="@string/address"
+                android:textColor="@color/darkGrey" />
 
-
-
-                <TextView
-                    android:id="@+id/rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/rating" />
-
-            </TableRow>
-
-        </TableLayout>
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rating"
+                android:textColor="@color/darkGrey" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
-            <ToggleButton
-                android:id="@+id/favorited"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="2"
-                android:background="@drawable/favs"
-                android:minWidth="40dp"
-                android:textAllCaps="false"
-                android:textOff="@string/fav"
-                android:textOn="@string/favoff"
-                android:checked="false"
-                />
 
             <Button
                 android:id="@+id/see_on_map"
@@ -114,7 +95,7 @@
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:background="@drawable/button_shape"
                 android:text="@string/see_on_map" />
 
@@ -126,9 +107,26 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:background="@drawable/button_shape"
                 android:text="@string/see_menu" />
+
+            <ToggleButton
+                android:id="@+id/favorited"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0"
+                android:background="@drawable/favs"
+                android:checked="false"
+                android:minWidth="40dp"
+                android:textAllCaps="false"
+                android:textOff="@string/fav"
+                android:textOn="@string/favoff" />
         </LinearLayout>
 
 
