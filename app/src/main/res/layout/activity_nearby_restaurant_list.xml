@@ -46,6 +46,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:clipToPadding="false"
+            android:paddingBottom="20dp"
             android:paddingTop="40dp"></android.support.v7.widget.ListViewCompat>
 
     </LinearLayout>

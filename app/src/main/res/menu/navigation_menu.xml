@@ -2,32 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:title="My Favourites"
+            android:title="@string/my_favourites"
             android:id="@+id/favourites_drawer"
             >
         </item>
 
         <item
-            android:title="Application Settings"
+            android:title="@string/application_settings"
             android:id="@+id/app_settings_drawer">
         </item>
 
         <item
-            android:title="My History"
+            android:title="@string/my_history"
             android:id="@+id/history_drawer">
         </item>
     </group>
 
     <item android:title="Advanced Options"></item>
 
-    <item android:title="advanced_options">
+    <item android:title="@string/advanced_options">
         <menu>
             <item
-                android:title="My Favourites"
+                android:title="@string/my_favourites"
                 android:id="@+id/about_us_drawer">
             </item>
             <item
-                android:title="Report"
+                android:title="@string/report"
                 android:id="@+id/report_drawer">
             </item>
         </menu>

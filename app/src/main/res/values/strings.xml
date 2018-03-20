@@ -22,4 +22,9 @@
     <string name="restaurants_around">Restaurants Near Me</string>
     <string name="testing">TESTING</string>
     <string name="back">Back</string>
+    <string name="advanced_options">Advanced Options</string>
+    <string name="my_favourites">My Favourites</string>
+    <string name="report">Report</string>
+    <string name="my_history">My History</string>
+    <string name="application_settings">Application Settings</string>
 </resources>
