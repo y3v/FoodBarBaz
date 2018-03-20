@@ -3,6 +3,7 @@
     package="com.example.yev.foodbarbaz">
 
     <uses-configuration android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -19,11 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NearbyRestaurantList">
-        </activity>
-        <activity android:name=".RestaurantMenu">
-
-        </activity>
+        <activity android:name=".NearbyRestaurantList"></activity>
+        <activity android:name=".RestaurantMenu"></activity>
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

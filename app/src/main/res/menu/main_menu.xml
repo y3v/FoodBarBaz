@@ -6,11 +6,10 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/favorites"
+        android:icon="@drawable/ic_account_circle_black_24dp"
         android:orderInCategory="160"
         android:title="@string/account"
-        app:showAsAction="always|withText"
-        android:icon="@drawable/ic_account_circle_black_24dp"
-        />
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="180"

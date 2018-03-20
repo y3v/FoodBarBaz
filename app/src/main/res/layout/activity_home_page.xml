@@ -26,12 +26,13 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
+            android:background="@color/darkGrey"
             android:contentDescription="@string/foodbarbaz_logo"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/restaurant_icon" />
+            app:srcCompat="@mipmap/foodbarbaz_round" />
 
         <TextView
             android:id="@+id/textView"

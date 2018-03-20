@@ -10,11 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-public class HomePage extends AppCompatActivity {
-
+public class Settings extends AppCompatActivity {
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -22,32 +20,28 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation_drawer);
+        setContentView(R.layout.activity_settings);
 
         toolBar = findViewById(R.id.appBar);
         setSupportActionBar(toolBar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView =findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.navigation_view);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
+
+        for (int i = 0; i < drawerLayout.getChildCount(); i++) {
+            drawerLayout.getChildAt(i).setOnClickListener(onNavigationItemClickListener());
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
-    }
-
-    public void scanArea(View v) {
-        EditText query = findViewById(R.id.query);
-
-        Intent intent = new Intent(this, NearbyRestaurantList.class);
-        intent.putExtra("query", query.getText().toString());
-        startActivity(intent);
     }
 
     @Override

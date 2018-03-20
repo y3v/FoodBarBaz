@@ -93,7 +93,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         //if there is a problem extractng, a placeholder is declared
         Glide.with(restaurantView.getContext())
                 .load(restaurant.getPhoto())
-                .placeholder(R.drawable.ic_home_black_24dp)
+                .placeholder(R.mipmap.foodbarbaz_round)
                 .into(restaurantImage);
 
         // see menu click listener
