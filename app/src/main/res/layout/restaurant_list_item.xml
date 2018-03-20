@@ -49,29 +49,38 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="3"
-                android:text="@string/address" />
+            <TableRow>
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/address"
+                    android:layout_weight="4"
+                    android:singleLine="false"
+                    />
 
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/rating" />
-        </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/rating" />
+
+            </TableRow>
+
+        </TableLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,15 +90,15 @@
             <ToggleButton
                 android:id="@+id/favorited"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@drawable/favs"
-                android:minWidth="20dp"
+                android:minWidth="40dp"
                 android:textAllCaps="false"
                 android:textOff="@string/fav"
                 android:textOn="@string/favoff"

@@ -72,7 +72,7 @@ public class NearbyRestaurantList extends AppCompatActivity {
 
                 if ((i == SCROLL_STATE_TOUCH_SCROLL || i== SCROLL_STATE_FLING) && isTitleVisible){
                     ValueAnimator valueAnimator = ValueAnimator.ofFloat(1f, 0f);
-                    valueAnimator.setDuration(1000);
+                    valueAnimator.setDuration(750);
                     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
@@ -86,8 +86,8 @@ public class NearbyRestaurantList extends AppCompatActivity {
                 if (i == SCROLL_STATE_IDLE){
                     if (!isTitleVisible){
                         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0f, 1f);
-                        valueAnimator.setDuration(1000);
-                        valueAnimator.setStartDelay(1000);
+                        valueAnimator.setDuration(750);
+                        valueAnimator.setStartDelay(500);
                         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
