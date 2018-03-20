@@ -131,7 +131,7 @@ public class Restaurant implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(placeID);
         parcel.writeString(address);
-        parcel.writeValue(photo);
+        parcel.writeString(photo);
         parcel.writeString(priceLevel);
         parcel.writeString(rating);
         parcel.writeString(category);

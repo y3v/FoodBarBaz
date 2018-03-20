@@ -102,9 +102,9 @@ public class RestaurantMenu extends AppCompatActivity {
         desserts.add(d2);
         desserts.add(d3);
 
-        menu.put("appetizers", appetizers);
-        menu.put("mainCourse", mainCourse);
-        menu.put("desserts", desserts);
+        menu.put("Appetizers", appetizers);
+        menu.put("Main Course", mainCourse);
+        menu.put("Desserts", desserts);
 
         return menu;
     }

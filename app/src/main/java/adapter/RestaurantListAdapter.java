@@ -33,6 +33,7 @@ import com.example.yev.foodbarbaz.RestaurantMenu;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import POJO.Restaurant;
@@ -50,17 +51,36 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
 
     @Override
     public View getView(int i, View view, final ViewGroup viewGroup) {
+        ArrayList<String> favourites = new ArrayList<>();
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View restaurantView = inflater.inflate(R.layout.restaurant_list_item, viewGroup, false);
 
         final Restaurant restaurant = (Restaurant) getItem(i);
 
-        TextView name = (TextView) restaurantView.findViewById(R.id.restaurant_name);
+        final TextView name = (TextView) restaurantView.findViewById(R.id.restaurant_name);
         TextView address = (TextView) restaurantView.findViewById(R.id.address);
         TextView category = (TextView) restaurantView.findViewById(R.id.category);
         TextView rating = (TextView) restaurantView.findViewById(R.id.rating);
         ImageView restaurantImage = (ImageView) restaurantView.findViewById(R.id.imageRestaurant);
-        ToggleButton favorited = (ToggleButton) restaurantView.findViewById(R.id.favorited);
+        final ToggleButton favorited = (ToggleButton) restaurantView.findViewById(R.id.favorited);
+
+        //No local DB at this time, therfore nothing is favourited at this time
+        favorited.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (favorited.isChecked()){
+                    Toast.makeText(getContext(), name.getText() + " added to Favourites!", Toast.LENGTH_SHORT).show();
+                    favorited.setBackground(getContext().getDrawable(R.drawable.favs_on));
+                }
+                else{
+                    Toast.makeText(getContext(), name.getText() + " removed Favourites!", Toast.LENGTH_SHORT).show();
+                    favorited.setBackground(getContext().getDrawable(R.drawable.favs));
+                }
+
+            }
+        });
+
         Button seeMap = (Button) restaurantView.findViewById(R.id.see_on_map);
         Button seeMenu = (Button) restaurantView.findViewById(R.id.see_menu);
 
@@ -68,8 +88,9 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         address.setText(restaurant.getAddress());
         //category.setText(restaurant.getCategory());
         rating.setText(restaurant.getRating());
-        //restaurantImage.setImageResource(restaurant.getPhoto());
-        //Glide.with(restaurantView).load(restaurant.getPhoto()).into(restaurantImage);
+
+        //GLIDE IS A LIBRARY THAT EASILY ALLOWS ONE TO EXTRACT BITMAPS FROM URL
+        //if there is a problem extractng, a placeholder is declared
         Glide.with(restaurantView.getContext())
                 .load(restaurant.getPhoto())
                 .placeholder(R.drawable.ic_home_black_24dp)
@@ -98,8 +119,8 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
         Log.e("IMAGEError!!!", restaurantImage.toString());
 
 
-        restaurantImage.setMaxWidth(100);
-        restaurantImage.setMaxHeight(100);
+        restaurantImage.setMaxWidth(150);
+        restaurantImage.setMaxHeight(150);
 
         return restaurantView;
     }

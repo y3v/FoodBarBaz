@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal"
+        android:background="@drawable/list_view_box"
         android:orientation="vertical"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,33 +29,25 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="25dp"
                 android:layout_weight="1"
                 android:text="@string/resteraunt_name"
-                android:textSize="22sp" />
+                android:textAlignment="center"
+                android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/category"
+            <ImageView
+                android:id="@+id/imageRestaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="2"
-                android:text="@string/category"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/todo"
+                android:maxHeight="100dp"
+                android:maxWidth="100dp"
+                app:srcCompat="@drawable/ic_home_black_24dp"
+                android:layout_gravity="center"/>
 
-        <ImageView
-            android:id="@+id/imageRestaurant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_home_black_24dp"
-            android:contentDescription="@string/todo"
-            android:adjustViewBounds="true"
-            android:maxWidth="100dp"
-            android:maxHeight="100dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +92,9 @@
                 android:minWidth="20dp"
                 android:textAllCaps="false"
                 android:textOff="@string/fav"
-                android:textOn="@string/favoff" />
+                android:textOn="@string/favoff"
+                android:checked="false"
+                />
 
             <Button
                 android:id="@+id/see_on_map"
@@ -111,7 +106,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="3"
-                android:background="@color/orange"
+                android:background="@drawable/button_shape"
                 android:text="@string/see_on_map" />
 
             <Button
@@ -123,7 +118,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="3"
-                android:background="@color/orange"
+                android:background="@drawable/button_shape"
                 android:text="@string/see_menu" />
         </LinearLayout>
 

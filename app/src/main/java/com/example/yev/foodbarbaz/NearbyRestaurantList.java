@@ -2,6 +2,7 @@ package com.example.yev.foodbarbaz;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Handler;
@@ -16,8 +17,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +42,7 @@ public class NearbyRestaurantList extends AppCompatActivity {
     ListView restaurantListView;
     private View mProgressView;
     private List<Restaurant> restaurants =  new ArrayList<Restaurant>();
+    private boolean isTitleVisible = false;
 
 
     @Override
@@ -53,8 +62,50 @@ public class NearbyRestaurantList extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
 
+        final TextView title = findViewById(R.id.nearby_restaurant_title);
         mProgressView = findViewById(R.id.restoProgress);
         restaurantListView = findViewById(R.id.restaurant_list_view);
+
+        restaurantListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+                if ((i == SCROLL_STATE_TOUCH_SCROLL || i== SCROLL_STATE_FLING) && isTitleVisible){
+                    ValueAnimator valueAnimator = ValueAnimator.ofFloat(1f, 0f);
+                    valueAnimator.setDuration(1000);
+                    valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            float alpha = (float) animation.getAnimatedValue();
+                            title.setAlpha(alpha);
+                        }
+                    });
+                    valueAnimator.start();
+                    isTitleVisible = false;
+                }
+                if (i == SCROLL_STATE_IDLE){
+                    if (!isTitleVisible){
+                        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0f, 1f);
+                        valueAnimator.setDuration(1000);
+                        valueAnimator.setStartDelay(1000);
+                        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                float alpha = (float) animation.getAnimatedValue();
+                                title.setAlpha(alpha);
+                            }
+                        });
+                        valueAnimator.start();
+                        isTitleVisible = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
