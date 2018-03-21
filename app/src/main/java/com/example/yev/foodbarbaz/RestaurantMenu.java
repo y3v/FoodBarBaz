@@ -166,6 +166,11 @@ public class RestaurantMenu extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_not_home, menu);
+
+        if (user !=null){
+            menu.add(0, Menu.FIRST, Menu.FIRST+2, "Logout").setShowAsAction(Menu.NONE);
+        }
+
         return true;
     }
 
@@ -180,8 +185,35 @@ public class RestaurantMenu extends AppCompatActivity {
             case R.id.action_favs:
                 Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.account:
+                accountPressed();
+                break;
+            case Menu.FIRST:
+                Toast.makeText(this, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
+                user = null;
+                getIntent().removeExtra("user");
+                Intent intent = getIntent();
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void accountPressed(){
+        if (user == null){
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        }
+        else{
+            //TO DO: set up intent for Display Accounts page!
+            //Intent intent = new Intent()
+            //intent.putExtra("user", user);
+            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+        }
     }
 }

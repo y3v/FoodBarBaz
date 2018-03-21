@@ -96,6 +96,11 @@ public class Settings extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_not_home, menu);
+
+        if (user !=null){
+            menu.add(0, Menu.FIRST, Menu.FIRST+2, R.string.logout).setShowAsAction(Menu.NONE);
+        }
+
         return true;
     }
 
@@ -112,6 +117,17 @@ public class Settings extends AppCompatActivity {
                 break;
             case R.id.account:
                 accountPressed();
+                break;
+            case Menu.FIRST:
+                Toast.makeText(this, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
+                user = null;
+                getIntent().removeExtra("user");
+                Intent intent = getIntent();
+                overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(intent);
                 break;
         }
 
