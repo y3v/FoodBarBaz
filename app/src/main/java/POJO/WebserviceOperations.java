@@ -46,7 +46,11 @@ public abstract class WebserviceOperations extends AsyncTask<Object, Void, List<
         String response = "";
 
         try{
-            URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api-0.0.1-SNAPSHOT/myRestaurants/" + postalCodes[0]);
+            String postalCode = postalCodes[0].toString();
+            Log.i("QUERY:", postalCode);
+            postalCode = postalCode.replaceAll(" ", "%20");
+            Log.i("QUERY:", postalCode);
+            URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api-0.0.1-SNAPSHOT/myRestaurants/" + postalCode);
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestProperty("User-Agent", "");
             urlConnection.setRequestMethod("GET");
