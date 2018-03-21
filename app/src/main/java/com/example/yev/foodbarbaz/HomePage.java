@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +25,9 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
 
-        toolBar = findViewById(R.id.appBar);
+        toolBar = findViewById(R.id.include);
         setSupportActionBar(toolBar);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
@@ -34,20 +36,15 @@ public class HomePage extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
+
+        Log.i("ON CREATE", "SHOULD BE HERE ON CCREATE");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        Log.i("CREATING MENU", "SHOULD BE HERE");
         return true;
-    }
-
-    public void scanArea(View v) {
-        EditText query = findViewById(R.id.query);
-
-        Intent intent = new Intent(this, NearbyRestaurantList.class);
-        intent.putExtra("query", query.getText().toString());
-        startActivity(intent);
     }
 
     @Override
@@ -64,6 +61,14 @@ public class HomePage extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void scanArea(View v) {
+        EditText query = findViewById(R.id.query);
+
+        Intent intent = new Intent(this, NearbyRestaurantList.class);
+        intent.putExtra("query", query.getText().toString());
+        startActivity(intent);
     }
 
     // ON NAVIGATION ITEM CLICK LISTENER
