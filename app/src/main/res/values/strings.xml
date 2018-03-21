@@ -37,4 +37,13 @@
     <string name="i_m_hungry">I\'m Hungry</string>
     <string name="empty_username">Please do not leave this field empty!</string>
     <string name="Incorrect_login">Username or Password is incorrect</string>
+    <string name="new_user_register_now">New User? Register Now!</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_first_name">Enter First Name</string>
+    <string name="enter_last_name">Enter Last Name</string>
+    <string name="register">Register!</string>
+    <string name="already_registered_login_here">Already registered? Login here!</string>
+    <string name="enter_e_mail">Enter E-mail</string>
+    <string name="password_match">Please make sure the passwords match!</string>
+    <string name="connection_error">There was an error with your request. Please try again later...</string>
 </resources>

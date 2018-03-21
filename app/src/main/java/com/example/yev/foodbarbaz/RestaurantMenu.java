@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import POJO.MenuItem;
 import POJO.Restaurant;
+import POJO.User;
 import adapter.RestaurantListAdapter;
 import adapter.RestaurantMenuExListAdapter;
 
@@ -34,9 +37,24 @@ public class RestaurantMenu extends AppCompatActivity {
     ExpandableListView expandableListView;
     Restaurant restaurant;
 
+    //The value of this user determines what will happen when you press on the account button
+    User user = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //If user is logged in, or just registered, the User object will be created
+        Bundle data = getIntent().getExtras();
+        if (data != null){
+            user = data.getParcelable("user");
+            if (user!=null){
+                Log.i("USERNAME----", user.getUsername());
+                Log.i("PASSWORD----" , user.getPassword());
+                Log.i("FIRSTNAME----", user.getFirstname());
+                Log.i("EMAIL----" , user.getEmail());
+            }
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_menu);
 
@@ -53,7 +71,6 @@ public class RestaurantMenu extends AppCompatActivity {
         toggle.syncState();
 
         // get restaurant data
-        Bundle data = getIntent().getExtras();
         if (data != null && data.keySet().contains("restaurant")){
             restaurant = data.getParcelable("restaurant");
             restaurant.setMenu(buildFakeMenu());
@@ -144,5 +161,27 @@ public class RestaurantMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu_not_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id){
+            case R.id.action_settings:
+                Toast.makeText(this,"Settings Clicked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_favs:
+                Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

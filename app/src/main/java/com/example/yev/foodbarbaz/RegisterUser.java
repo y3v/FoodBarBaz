@@ -1,7 +1,6 @@
 package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.DrawerLayout;
@@ -22,24 +21,18 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import POJO.LoginHandler;
-import POJO.Restaurant;
 import POJO.User;
 
-public class Login extends AppCompatActivity {
+public class RegisterUser extends AppCompatActivity {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
@@ -47,14 +40,17 @@ public class Login extends AppCompatActivity {
 
     TextInputEditText username;
     TextInputEditText password;
-
-    User user;
+    TextInputEditText password2;
+    TextInputEditText firstname;
+    TextInputEditText lastname;
+    TextInputEditText email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register_user);
 
+        //Initialize the Drawer Layout
         toolBar = findViewById(R.id.include);
         setSupportActionBar(toolBar);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -63,20 +59,34 @@ public class Login extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        username = findViewById(R.id.loginUsername);
-        password = findViewById(R.id.loginPassword);
+        //Find Views
+        username = findViewById(R.id.registerUsername);
+        password = findViewById(R.id.registerPassword);
+        password2 = findViewById(R.id.registerPasswordConfirm);
+        firstname = findViewById(R.id.registerFirstname);
+        lastname = findViewById(R.id.registerLastname);
+        email = findViewById(R.id.registerEmail);
 
+        //Buttons
+        Button registerButton = findViewById(R.id.buttonRegister);
+        Button registerLoginButton = findViewById(R.id.buttonRegLogin);
 
-        Button loginButton = findViewById(R.id.buttonLogin);
-        Button regButton = findViewById(R.id.buttonRegFromLogin);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        //Listeners
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Clear errors
                 username.setError(null);
                 password.setError(null);
-                if (!validateFormat(username.getText().toString(), password.getText().toString())){
+                password2.setError(null);
+                firstname.setError(null);
+                lastname.setError(null);
+                email.setError(null);
+                if (!validateFormat(username.getText().toString(),
+                        password.getText().toString(),
+                        password2.getText().toString(),
+                        firstname.getText().toString(),
+                        lastname.getText().toString(),
+                        email.getText().toString())){
 
                     //Create call to webservice
                     sendPost();
@@ -84,12 +94,10 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        regButton.setOnClickListener(new View.OnClickListener() {
+        registerLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Start Register page
-                Intent intent = new Intent(getApplicationContext(), RegisterUser.class);
-                startActivity(intent);
+
             }
         });
 
@@ -97,7 +105,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private boolean validateFormat(String username, String password){
+    private boolean validateFormat(String username, String password, String password2, String firstname, String lastname, String email){
         boolean ret = false;
         if (TextUtils.isEmpty(username)){
             this.username.setError(getString(R.string.empty_username));
@@ -105,6 +113,26 @@ public class Login extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(password)){
             this.password.setError(getString(R.string.empty_username));
+            ret = true;
+        }
+        if (TextUtils.isEmpty(password2)){
+            this.password2.setError(getString(R.string.empty_username));
+            ret = true;
+        }
+        if (!password.equals(password2)){
+            this.password.requestFocus();
+            this.password.setError(getString(R.string.password_match));
+        }
+        if (TextUtils.isEmpty(firstname)){
+            this.firstname.setError(getString(R.string.empty_username));
+            ret = true;
+        }
+        if (TextUtils.isEmpty(lastname)){
+            this.lastname.setError(getString(R.string.empty_username));
+            ret = true;
+        }
+        if (TextUtils.isEmpty(email)){
+            this.email.setError(getString(R.string.empty_username));
             ret = true;
         }
         return ret;
@@ -139,7 +167,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api-0.0.1-SNAPSHOT/login");
+                    URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api-0.0.1-SNAPSHOT/register");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -150,6 +178,9 @@ public class Login extends AppCompatActivity {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("username", username.getText().toString());
                     jsonParam.put("password", password.getText().toString());
+                    jsonParam.put("firstname", firstname.getText().toString());
+                    jsonParam.put("lastname", lastname.getText().toString());
+                    jsonParam.put("email", email.getText().toString());
 
 
                     Log.i("JSON", jsonParam.toString());
@@ -159,49 +190,34 @@ public class Login extends AppCompatActivity {
 
                     os.flush();
 
-                    InputStream inputStream = conn.getInputStream();
-                    BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(inputStream));
-
-                    String myLine;
-                    StringBuilder strBuilder= new StringBuilder();
-
-                    while((myLine = responseBuffer.readLine()) != null) {
-                        Log.i("Content: ", myLine);
-                        strBuilder.append(myLine);
-                    }
-
-                    Log.i("CONTENT", response);
-                    response = strBuilder.toString();
-
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
+
+                    if (conn.getResponseCode() == 200){
+                        //ID is auto-generated so I pass a 0 because constructor needs it
+                        User user = new User(0, username.getText().toString(),
+                                password.getText().toString(),
+                                firstname.getText().toString(),
+                                lastname.getText().toString(),
+                                email.getText().toString());
+
+                        Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
+                    }
+                    else{
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                username.requestFocus();
+                                username.setError(getString(R.string.connection_error));
+                            }
+                        });
+                    }
 
                     conn.disconnect();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-
-                Type type = new TypeToken<User>() {}.getType();
-                Gson gson = new Gson();
-                user = gson.fromJson(response, type);
-
-                if (user != null){
-                    //If a value is returned, display the results to console for testing
-                    //Start new activity!
-                    Log.i("LOGIN UN:" , user.getUsername());
-                    Log.i("LOGIN PW:" , user.getPassword());
-                    Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                    intent.putExtra("user", user);
-                    startActivity(intent);
-                }
-                else{
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            username.requestFocus();
-                            username.setError(getString(R.string.Incorrect_login));
-                        }
-                    });
                 }
             }
         });

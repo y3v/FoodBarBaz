@@ -7,18 +7,35 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import POJO.User;
 
 public class Settings extends AppCompatActivity {
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    //The value of this user determines what will happen when you press on the account button
+    User user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //If user is logged in, or just registered, the User object will be created
+        Bundle data = getIntent().getExtras();
+        if (data != null){
+            user = data.getParcelable("user");
+            Log.i("USERNAME----", user.getUsername());
+            Log.i("PASSWORD----" , user.getPassword());
+            Log.i("FIRSTNAME----", user.getFirstname());
+            Log.i("EMAIL----" , user.getEmail());
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -40,7 +57,7 @@ public class Settings extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu_not_home, menu);
         return true;
     }
 
@@ -54,6 +71,9 @@ public class Settings extends AppCompatActivity {
                 break;
             case R.id.action_favs:
                 Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.account:
+                accountPressed();
                 break;
         }
 
@@ -94,5 +114,18 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+    }
+
+    private void accountPressed(){
+        if (user == null){
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        }
+        else{
+            //TO DO: set up intent for Display Accounts page!
+            //Intent intent = new Intent()
+            //intent.putExtra("user", user);
+            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+        }
     }
 }

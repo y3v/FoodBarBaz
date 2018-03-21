@@ -25,14 +25,15 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/darkGrey"
+            android:layout_marginTop="30dp"
+            android:background="@mipmap/foodbarbaz_round"
+            android:layout_gravity="center"
             android:contentDescription="@string/foodbarbaz_logo"
-            android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/foodbarbaz_round" />
+            android:scaleX="2"
+            android:scaleY="2" />
 
         <TextView
             android:id="@+id/textView"
@@ -69,5 +70,6 @@
             android:text="@string/search"
             android:textColor="@color/white"
             android:textStyle="bold" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -14,23 +14,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import POJO.User;
+
 public class HomePage extends AppCompatActivity {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    //The value of this user determines what will happen when you press on the account button
+    User user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //If user is logged in, or just registered, the User object will be created
         Bundle data = getIntent().getExtras();
-
-
         if (data != null){
-            /*if (data.keySet().contains("query"))
-                query = (String) data.get("query");
-            else
-                query = "H2M 1M2";*/
+            user = data.getParcelable("user");
+            Log.i("USERNAME----", user.getUsername());
+            Log.i("PASSWORD----" , user.getPassword());
+            Log.i("FIRSTNAME----", user.getFirstname());
+            Log.i("EMAIL----" , user.getEmail());
         }
 
         super.onCreate(savedInstanceState);
@@ -69,6 +74,9 @@ public class HomePage extends AppCompatActivity {
             case R.id.action_favs:
                 Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.account:
+                accountPressed();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -79,6 +87,7 @@ public class HomePage extends AppCompatActivity {
 
         Intent intent = new Intent(this, NearbyRestaurantList.class);
         intent.putExtra("query", query.getText().toString());
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
@@ -113,8 +122,22 @@ public class HomePage extends AppCompatActivity {
                 }
 
                 intent.putExtra("navigation", buttonPressed);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         };
+    }
+
+    private void accountPressed(){
+        if (user == null){
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        }
+        else{
+            //TO DO: set up intent for Display Accounts page!
+            //Intent intent = new Intent()
+            //intent.putExtra("user", user);
+            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+        }
     }
 }
