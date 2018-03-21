@@ -22,6 +22,17 @@ public class HomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Bundle data = getIntent().getExtras();
+
+
+        if (data != null){
+            /*if (data.keySet().contains("query"))
+                query = (String) data.get("query");
+            else
+                query = "H2M 1M2";*/
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
 

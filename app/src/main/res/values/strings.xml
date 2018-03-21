@@ -31,4 +31,10 @@
     <string name="scan_your_area">Scan your area!</string>
     <string name="foodbarbaz_logo">FoodBarBaz logo</string>
     <string name="search">Search</string>
+    <string name="login">Login!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="i_m_hungry">I\'m Hungry</string>
+    <string name="empty_username">Please do not leave this field empty!</string>
+    <string name="Incorrect_login">Username or Password is incorrect</string>
 </resources>
