@@ -31,11 +31,15 @@ public class HomePage extends AppCompatActivity {
         //If user is logged in, or just registered, the User object will be created
         Bundle data = getIntent().getExtras();
         if (data != null){
-            user = data.getParcelable("user");
-            Log.i("USERNAME----", user.getUsername());
-            Log.i("PASSWORD----" , user.getPassword());
-            Log.i("FIRSTNAME----", user.getFirstname());
-            Log.i("EMAIL----" , user.getEmail());
+            if (data.containsKey("user")){
+                user = data.getParcelable("user");
+                if (user != null){
+                    Log.i("USERNAME----", user.getUsername());
+                    Log.i("PASSWORD----" , user.getPassword());
+                    Log.i("FIRSTNAME----", user.getFirstname());
+                    Log.i("EMAIL----" , user.getEmail());
+                }
+            }
         }
 
         super.onCreate(savedInstanceState);
@@ -47,6 +51,12 @@ public class HomePage extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
+
+        // set children on click listener
+        for (int i = 0; i < navigationView.getChildCount(); i++){
+            navigationView.getChildAt(i).setOnClickListener(onNavigationItemClickListener());
+            Log.i("ssasdf","is it passing here?");
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
@@ -96,7 +106,7 @@ public class HomePage extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Settings.class);
+                Intent intent = new Intent(null, Settings.class);
                 String buttonPressed = "";
 
                 switch (v.getId()){

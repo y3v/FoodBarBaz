@@ -46,4 +46,6 @@
     <string name="enter_e_mail">Enter E-mail</string>
     <string name="password_match">Please make sure the passwords match!</string>
     <string name="connection_error">There was an error with your request. Please try again later...</string>
+    <string name="in_x_activity">IN X ACTIVITY</string>
+    <string name="in_development">In development</string>
 </resources>

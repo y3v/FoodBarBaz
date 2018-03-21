@@ -1,6 +1,7 @@
 package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import POJO.User;
@@ -19,6 +21,9 @@ public class Settings extends AppCompatActivity {
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    ConstraintLayout constraintLayout;
+    TextView textView;
+    String navigation;
 
     //The value of this user determines what will happen when you press on the account button
     User user = null;
@@ -26,18 +31,51 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        constraintLayout = findViewById(R.id.context_relative_layout);
+        textView = findViewById(R.id.context_relative_text);
+
         //If user is logged in, or just registered, the User object will be created
         Bundle data = getIntent().getExtras();
         if (data != null){
-            user = data.getParcelable("user");
-            Log.i("USERNAME----", user.getUsername());
-            Log.i("PASSWORD----" , user.getPassword());
-            Log.i("FIRSTNAME----", user.getFirstname());
-            Log.i("EMAIL----" , user.getEmail());
-        }
+            if (data.containsKey("user")){
+                user = data.getParcelable("user");
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+                if (user != null){
+                    Log.i("USERNAME----", user.getUsername());
+                    Log.i("PASSWORD----" , user.getPassword());
+                    Log.i("FIRSTNAME----", user.getFirstname());
+                    Log.i("EMAIL----" , user.getEmail());
+                }
+            }
+
+            if (data.containsKey("navigation")){
+                navigation = (String) data.get("navigation");
+                switch(navigation){
+                    case "About us":
+                        constraintLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        textView.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case "Favourites":
+                        constraintLayout.setBackgroundColor(getResources().getColor(R.color.lightRed));
+                        textView.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case "Settings":
+                        constraintLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        textView.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    case "History":
+                        constraintLayout.setBackgroundColor(getResources().getColor(R.color.darkGrey));
+                        textView.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                    default:
+                        constraintLayout.setBackgroundColor(getResources().getColor(R.color.teal));
+                        textView.setTextColor(getResources().getColor(R.color.white));
+                        break;
+                }
+            }
+        }
 
         toolBar = findViewById(R.id.appBar);
         setSupportActionBar(toolBar);

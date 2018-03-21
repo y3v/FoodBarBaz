@@ -9,5 +9,8 @@
     <color name="orange">#fc9140</color>
     <color name="white">#ececec</color>
     <color name="darkGrey">#363636</color>
+    <color name="lightRed">#e75555</color>
+    <color name="purp">#9553e1</color>
+    <color name="cyan">#46dfe4</color>
     <color name="darkOrange">#e47546</color>
 </resources>
