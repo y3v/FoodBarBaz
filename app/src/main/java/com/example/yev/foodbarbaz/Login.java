@@ -2,6 +2,7 @@ package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.DrawerLayout;
@@ -39,7 +40,7 @@ import POJO.LoginHandler;
 import POJO.Restaurant;
 import POJO.User;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
@@ -228,5 +229,41 @@ public class Login extends AppCompatActivity {
             //intent.putExtra("user", user);
             Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        String buttonPressed = "";
+        int id = item.getItemId();
+
+        Log.i("" + id, "jasldkfj");
+        switch (id){
+            case R.id.about_us_drawer:
+                buttonPressed = "About us";
+                break;
+
+            case R.id.favourites_drawer:
+                buttonPressed = "Favourites";
+                break;
+
+            case R.id.app_settings_drawer:
+                buttonPressed = "Settings";
+                break;
+
+            case R.id.history_drawer:
+                buttonPressed = "History";
+                break;
+
+            case R.id.report_drawer:
+                buttonPressed = "Report";
+                break;
+        }
+
+        intent.putExtra("navigation", buttonPressed);
+        intent.putExtra("user", user);
+        startActivity(intent);
+
+        return false;
     }
 }

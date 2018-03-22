@@ -2,6 +2,7 @@ package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,7 +31,7 @@ import POJO.User;
 import adapter.RestaurantListAdapter;
 import adapter.RestaurantMenuExListAdapter;
 
-public class RestaurantMenu extends AppCompatActivity {
+public class RestaurantMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -127,40 +128,40 @@ public class RestaurantMenu extends AppCompatActivity {
         return menu;
     }
 
-    // ON NAVIGATION ITEM CLICK LISTENER
-    public View.OnClickListener onNavigationItemClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Settings.class);
-                String buttonPressed = "";
+    @Override
+    public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        String buttonPressed = "";
+        int id = item.getItemId();
 
-                switch (v.getId()){
-                    case R.id.about_us_drawer:
-                        buttonPressed = "About us";
-                        break;
+        Log.i("" + id, "jasldkfj");
+        switch (id){
+            case R.id.about_us_drawer:
+                buttonPressed = "About us";
+                break;
 
-                    case R.id.favourites_drawer:
-                        buttonPressed = "Favourites";
-                        break;
+            case R.id.favourites_drawer:
+                buttonPressed = "Favourites";
+                break;
 
-                    case R.id.app_settings_drawer:
-                        buttonPressed = "Settings";
-                        break;
+            case R.id.app_settings_drawer:
+                buttonPressed = "Settings";
+                break;
 
-                    case R.id.history_drawer:
-                        buttonPressed = "History";
-                        break;
+            case R.id.history_drawer:
+                buttonPressed = "History";
+                break;
 
-                    case R.id.report_drawer:
-                        buttonPressed = "Report";
-                        break;
-                }
+            case R.id.report_drawer:
+                buttonPressed = "Report";
+                break;
+        }
 
-                intent.putExtra("navigation", buttonPressed);
-                startActivity(intent);
-            }
-        };
+        intent.putExtra("navigation", buttonPressed);
+        intent.putExtra("user", user);
+        startActivity(intent);
+
+        return false;
     }
 
     @Override

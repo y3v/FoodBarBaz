@@ -1,6 +1,7 @@
 package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.DrawerLayout;
@@ -32,7 +33,7 @@ import java.net.URL;
 import POJO.LoginHandler;
 import POJO.User;
 
-public class RegisterUser extends AppCompatActivity {
+public class RegisterUser extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
@@ -162,6 +163,41 @@ public class RegisterUser extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        String buttonPressed = "";
+        int id = item.getItemId();
+
+        Log.i("" + id, "jasldkfj");
+        switch (id){
+            case R.id.about_us_drawer:
+                buttonPressed = "About us";
+                break;
+
+            case R.id.favourites_drawer:
+                buttonPressed = "Favourites";
+                break;
+
+            case R.id.app_settings_drawer:
+                buttonPressed = "Settings";
+                break;
+
+            case R.id.history_drawer:
+                buttonPressed = "History";
+                break;
+
+            case R.id.report_drawer:
+                buttonPressed = "Report";
+                break;
+        }
+
+        intent.putExtra("navigation", buttonPressed);
+        startActivity(intent);
+
+        return false;
     }
 
     public void sendPost() {

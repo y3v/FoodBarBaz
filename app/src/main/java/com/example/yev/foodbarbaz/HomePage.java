@@ -1,6 +1,7 @@
 package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 import POJO.User;
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
@@ -51,12 +52,7 @@ public class HomePage extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
-
-        // set children on click listener
-        for (int i = 0; i < navigationView.getChildCount(); i++){
-            navigationView.getChildAt(i).setOnClickListener(onNavigationItemClickListener());
-            Log.i("ssasdf","is it passing here?");
-        }
+        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
@@ -117,43 +113,6 @@ public class HomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // ON NAVIGATION ITEM CLICK LISTENER
-    public View.OnClickListener onNavigationItemClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(null, Settings.class);
-                String buttonPressed = "";
-
-                switch (v.getId()){
-                    case R.id.about_us_drawer:
-                        buttonPressed = "About us";
-                        break;
-
-                    case R.id.favourites_drawer:
-                        buttonPressed = "Favourites";
-                        break;
-
-                    case R.id.app_settings_drawer:
-                        buttonPressed = "Settings";
-                        break;
-
-                    case R.id.history_drawer:
-                        buttonPressed = "History";
-                        break;
-
-                    case R.id.report_drawer:
-                        buttonPressed = "Report";
-                        break;
-                }
-
-                intent.putExtra("navigation", buttonPressed);
-                intent.putExtra("user", user);
-                startActivity(intent);
-            }
-        };
-    }
-
     private void accountPressed(){
         if (user == null){
             Intent intent = new Intent(this, Login.class);
@@ -165,5 +124,41 @@ public class HomePage extends AppCompatActivity {
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
             startActivityForResult(intent, 1);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        String buttonPressed = "";
+        int id = item.getItemId();
+
+        Log.i("" + id, "jasldkfj");
+        switch (id){
+            case R.id.about_us_drawer:
+                buttonPressed = "About us";
+                break;
+
+            case R.id.favourites_drawer:
+                buttonPressed = "Favourites";
+                break;
+
+            case R.id.app_settings_drawer:
+                buttonPressed = "Settings";
+                break;
+
+            case R.id.history_drawer:
+                buttonPressed = "History";
+                break;
+
+            case R.id.report_drawer:
+                buttonPressed = "Report";
+                break;
+        }
+
+        intent.putExtra("navigation", buttonPressed);
+        intent.putExtra("user", user);
+        startActivity(intent);
+
+        return false;
     }
 }

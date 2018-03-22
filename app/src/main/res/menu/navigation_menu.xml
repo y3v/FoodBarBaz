@@ -14,7 +14,6 @@
             android:id="@+id/history_drawer"
             android:title="@string/my_history"></item>
     </group>
-    <item android:title="Advanced Options"></item>
 
     <item android:title="@string/advanced_options">
         <menu>
