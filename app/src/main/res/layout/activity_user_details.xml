@@ -169,6 +169,7 @@
                     android:layout_height="wrap_content"
                     android:padding="15dp"
                     android:text="Back"
+                    android:layout_gravity="center"
                     android:background="@drawable/button_shape"/>
 
             </LinearLayout>
