@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="40dp"
                     android:background="@mipmap/foodbarbaz_round"
                     android:contentDescription="@string/foodbarbaz_logo"
                     android:scaleX="2"
@@ -169,6 +169,7 @@
                     android:layout_height="wrap_content"
                     android:padding="15dp"
                     android:text="Back"
+                    android:layout_marginBottom="30dp"
                     android:layout_gravity="center"
                     android:background="@drawable/button_shape"/>
 

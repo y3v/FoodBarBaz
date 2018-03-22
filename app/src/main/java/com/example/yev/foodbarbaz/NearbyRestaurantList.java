@@ -287,10 +287,10 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
             startActivity(intent);
         }
         else{
-            //TO DO: set up intent for Display Accounts page!
-            //Intent intent = new Intent()
-            //intent.putExtra("user", user);
-            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, UserDetails.class);
+            intent.putExtra("user", user);
+            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+            startActivityForResult(intent, 1);
         }
     }
 }
