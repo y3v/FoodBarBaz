@@ -53,7 +53,6 @@ public class NearbyRestaurantList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle data = getIntent().getExtras();
-
         if (data != null){
             if (data.keySet().contains("query"))
                 query = (String) data.get("query");

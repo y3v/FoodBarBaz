@@ -23,8 +23,9 @@
         <activity android:name=".NearbyRestaurantList" />
         <activity android:name=".RestaurantMenu" />
         <activity android:name=".Settings" />
-        <activity android:name=".Login"></activity>
-        <activity android:name=".RegisterUser"></activity>
+        <activity android:name=".Login" />
+        <activity android:name=".RegisterUser" />
+        <activity android:name=".UserDetails"></activity>
     </application>
 
 </manifest>
