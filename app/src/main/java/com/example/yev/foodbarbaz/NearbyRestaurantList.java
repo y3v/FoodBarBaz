@@ -190,6 +190,11 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
                 overridePendingTransition(0, 0);
                 startActivity(intent);
                 break;
+            case R.id.search:
+                intent = new Intent(getApplicationContext(),HomePage.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

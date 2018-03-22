@@ -136,6 +136,11 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
             case R.id.account:
                 accountPressed();
                 break;
+            case R.id.search:
+                Intent intent = new Intent(getApplicationContext(),HomePage.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

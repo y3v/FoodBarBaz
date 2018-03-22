@@ -55,4 +55,5 @@
     <string name="first_name_deets">First Name</string>
     <string name="last_name_deets">Last Name</string>
     <string name="e_mail_deets">E-mail:</string>
+    <string name="about_us">About Us</string>
 </resources>

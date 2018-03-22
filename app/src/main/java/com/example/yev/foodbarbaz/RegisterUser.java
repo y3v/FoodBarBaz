@@ -160,6 +160,10 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
             case R.id.action_favs:
                 Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.search:
+                Intent intent = new Intent(getApplicationContext(),HomePage.class);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

@@ -112,6 +112,11 @@ public class UserDetails extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 startActivity(intent);
                 break;
+            case R.id.search:
+                intent = new Intent(getApplicationContext(),HomePage.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

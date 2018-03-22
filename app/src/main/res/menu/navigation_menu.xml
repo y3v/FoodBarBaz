@@ -18,7 +18,7 @@
     <item android:title="@string/advanced_options">
         <menu>
             <item
-                android:title="@string/my_favourites"
+                android:title="@string/about_us"
                 android:id="@+id/about_us_drawer">
             </item>
             <item
