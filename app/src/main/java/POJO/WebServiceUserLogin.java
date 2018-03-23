@@ -38,7 +38,7 @@ public abstract class WebServiceUserLogin extends AsyncTask<Object, Void, List<O
         OutputStream out = null;
 
         try{
-            URL url = new URL("http://localhost:9090/login");
+            URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/login");
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestProperty("User-Agent", "");
             urlConnection.setRequestMethod("POST");

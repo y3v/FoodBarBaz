@@ -153,7 +153,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api-0.0.1-SNAPSHOT/login");
+                    URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/login");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");

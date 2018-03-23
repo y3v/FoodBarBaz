@@ -50,7 +50,7 @@ public abstract class WebserviceOperations extends AsyncTask<Object, Void, List<
             Log.i("QUERY:", postalCode);
             postalCode = postalCode.replaceAll(" ", "%20");
             Log.i("QUERY:", postalCode);
-            URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api-0.0.1-SNAPSHOT/myRestaurants/" + postalCode);
+            URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/myRestaurants/" + postalCode);
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestProperty("User-Agent", "");
             urlConnection.setRequestMethod("GET");

@@ -28,8 +28,14 @@ import android.content.res.Resources;
 //import com.bumptech.glide.Glide;
 import com.bumptech.glide.Glide;
 import com.example.yev.foodbarbaz.HomePage;
+import com.example.yev.foodbarbaz.MapsActivity;
 import com.example.yev.foodbarbaz.R;
 import com.example.yev.foodbarbaz.RestaurantMenu;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.w3c.dom.Text;
 
@@ -42,7 +48,9 @@ import POJO.Restaurant;
  * Created by olile on 2018-03-15.
  */
 
-public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
+public class RestaurantListAdapter extends ArrayAdapter<Restaurant> implements OnMapReadyCallback{
+
+    private GoogleMap mMap;
 
     public RestaurantListAdapter(Context context, List<Restaurant> objects) {
         super(context, R.layout.restaurant_list_item, objects);
@@ -108,6 +116,22 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
             }
         });
 
+        // see map on click listener
+        seeMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // createMapDialogBox("lon", "lat");
+                Intent intent = new Intent(viewGroup.getContext(), MapsActivity.class);
+
+                intent.putExtra("name", restaurant.getName());
+                intent.putExtra("address", restaurant.getAddress());
+
+                viewGroup.getContext().startActivity(intent);
+                Log.i("SEE MAP CLICK", "ITS CLICKED");
+            }
+        });
+
+        // see restaurant image on click listener
         restaurantImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,5 +191,51 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant>{
       dialog.show();
 
     }
+
+    private void createMapDialogBox(String lon, String lat){
+       /* LayoutInflater inflater = LayoutInflater.from(getContext());
+        View dialogView = inflater.inflate(R.layout.image_popup, null);
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+        Button dismiss = dialogView.findViewById(R.id.dismissButton);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();*/
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        // SET YOUR LAYOUT INFLATER FOR MAP
+        View mView = inflater.inflate(R.layout.map_popup, null);
+        ((MapView)mView.findViewById(R.id.mapView)).getMapAsync(this);
+
+        Button dismiss = mView.findViewById(R.id.dismissButton);
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMinZoomPreference(12);
+        LatLng ny = new LatLng(40.7143528, -74.0059731);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+    }
+
 }
 
