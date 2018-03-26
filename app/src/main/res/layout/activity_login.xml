@@ -110,20 +110,26 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginVertical="10dp"
-                    android:background="@drawable/button_shape"
+                    android:background="@color/teal"
                     android:padding="10dp"
-                    android:text="@string/i_m_hungry" />
+                    android:text="@string/i_m_hungry"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/buttonRegFromLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_shape"
-                    android:padding="10dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
-                    android:text="@string/new_user_register_now" />
+                    android:layout_marginTop="20dp"
+                    android:background="@color/teal"
+                    android:padding="10dp"
+                    android:text="@string/new_user_register_now"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

@@ -157,9 +157,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginVertical="10dp"
-                    android:background="@drawable/button_shape"
+                    android:background="@color/teal"
                     android:padding="10dp"
-                    android:text="@string/register" />
+                    android:text="@string/register"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/buttonRegLogin"
@@ -169,9 +171,11 @@
                     android:layout_marginBottom="30dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginVertical="10dp"
-                    android:background="@drawable/button_shape"
+                    android:background="@color/teal"
                     android:padding="10dp"
-                    android:text="@string/already_registered_login_here" />
+                    android:text="@string/already_registered_login_here"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
         </ScrollView>
 

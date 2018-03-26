@@ -1,7 +1,6 @@
 package com.example.yev.foodbarbaz;
 
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -11,13 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +22,6 @@ import java.util.List;
 import POJO.MenuItem;
 import POJO.Restaurant;
 import POJO.User;
-import adapter.RestaurantListAdapter;
 import adapter.RestaurantMenuExListAdapter;
 
 public class RestaurantMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
