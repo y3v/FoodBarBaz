@@ -1,4 +1,4 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -17,20 +17,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import POJO.LoginHandler;
 import POJO.User;
 
 public class RegisterUser extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -211,7 +203,7 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/register");
+                    URL url = new URL("https://foodbarbaz.herokuapp.com/register");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");

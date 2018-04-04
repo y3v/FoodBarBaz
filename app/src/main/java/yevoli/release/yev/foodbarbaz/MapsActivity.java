@@ -1,4 +1,4 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -13,18 +13,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
-
-import POJO.Restaurant;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -93,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.i("QUERY:", address);
                 address = address.replaceAll(" ", "%20");
                 Log.i("QUERY:", address);
-                URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/myGeoCode/" + address);
+                URL url = new URL("https://foodbarbaz.herokuapp.com/myGeoCode/" + address);
                 HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
                 urlConnection.setRequestProperty("User-Agent", "");
                 urlConnection.setRequestMethod("GET");
