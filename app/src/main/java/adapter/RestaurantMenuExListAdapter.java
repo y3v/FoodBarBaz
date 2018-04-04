@@ -1,22 +1,16 @@
 package adapter;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.Typeface;
-import android.text.Layout;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.yev.foodbarbaz.R;
+import yevoli.release.yev.foodbarbaz.R;
 
-import java.lang.reflect.Type;
-import java.time.format.TextStyle;
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;

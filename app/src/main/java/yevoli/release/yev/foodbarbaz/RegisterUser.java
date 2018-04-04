@@ -1,4 +1,4 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -203,7 +203,7 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/register");
+                    URL url = new URL("https://foodbarbaz.herokuapp.com/register");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");

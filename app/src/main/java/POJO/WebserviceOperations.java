@@ -1,11 +1,6 @@
 package POJO;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -13,13 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import com.example.yev.foodbarbaz.NearbyRestaurantList;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,7 +41,7 @@ public abstract class WebserviceOperations extends AsyncTask<Object, Void, List<
             Log.i("QUERY:", postalCode);
             postalCode = postalCode.replaceAll(" ", "%20");
             Log.i("QUERY:", postalCode);
-            URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/myRestaurants/" + postalCode);
+            URL url = new URL("https://foodbarbaz.herokuapp.com/myRestaurants/" + postalCode);
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestProperty("User-Agent", "");
             urlConnection.setRequestMethod("GET");

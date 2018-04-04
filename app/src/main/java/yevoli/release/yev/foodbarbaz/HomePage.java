@@ -1,6 +1,7 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,74 +12,60 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import POJO.User;
 
-public class UserDetails extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
-    TextView username;
-    TextView firstname;
-    TextView lastname;
-    TextView email;
-
-    User user;
+    //The value of this user determines what will happen when you press on the account button
+    User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_details);
 
-        //Get User Data
+        //If user is logged in, or just registered, the User object will be created
         Bundle data = getIntent().getExtras();
         if (data != null){
-            user = data.getParcelable("user");
-            if (user!=null){
-                Log.i("USERNAME----", user.getUsername());
-                Log.i("PASSWORD----" , user.getPassword());
-                Log.i("FIRSTNAME----", user.getFirstname());
-                Log.i("EMAIL----" , user.getEmail());
+            if (data.containsKey("user")){
+                user = data.getParcelable("user");
+                if (user != null){
+                    Log.i("USERNAME----", user.getUsername());
+                    Log.i("PASSWORD----" , user.getPassword());
+                    Log.i("FIRSTNAME----", user.getFirstname());
+                    Log.i("EMAIL----" , user.getEmail());
+                }
             }
         }
 
-        //Set up drawer
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.navigation_drawer);
+
         toolBar = findViewById(R.id.include);
         setSupportActionBar(toolBar);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
+
         toggle.syncState();
 
-        //Configure TextViews
-        username = findViewById(R.id.username_details);
-        firstname = findViewById(R.id.fn_details);
-        lastname = findViewById(R.id.ln_details);
-        email = findViewById(R.id.email_details);
-
-        username.setText(user.getUsername());
-        firstname.setText(user.getFirstname());
-        lastname.setText(user.getLastname());
-        email.setText(user.getEmail());
-
-        Button button = findViewById(R.id.enoughDetails);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        Log.i("ON CREATE", "SHOULD BE HERE ON CCREATE");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu_not_home, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        Log.i("CREATING MENU", "SHOULD BE HERE");
 
         if (user !=null){
             menu.add(0, Menu.FIRST, Menu.FIRST+2, "Logout").setShowAsAction(Menu.NONE);
@@ -112,14 +99,18 @@ public class UserDetails extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 startActivity(intent);
                 break;
-            case R.id.search:
-                intent = new Intent(getApplicationContext(),HomePage.class);
-                intent.putExtra("user",user);
-                startActivity(intent);
-                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void scanArea(View v) {
+        EditText query = findViewById(R.id.query);
+
+        Intent intent = new Intent(this, NearbyRestaurantList.class);
+        intent.putExtra("query", query.getText().toString());
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 
     private void accountPressed(){
@@ -133,5 +124,41 @@ public class UserDetails extends AppCompatActivity {
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
             startActivityForResult(intent, 1);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        String buttonPressed = "";
+        int id = item.getItemId();
+
+        Log.i("" + id, "jasldkfj");
+        switch (id){
+            case R.id.about_us_drawer:
+                buttonPressed = "About us";
+                break;
+
+            case R.id.favourites_drawer:
+                buttonPressed = "Favourites";
+                break;
+
+            case R.id.app_settings_drawer:
+                buttonPressed = "Settings";
+                break;
+
+            case R.id.history_drawer:
+                buttonPressed = "History";
+                break;
+
+            case R.id.report_drawer:
+                buttonPressed = "Report";
+                break;
+        }
+
+        intent.putExtra("navigation", buttonPressed);
+        intent.putExtra("user", user);
+        startActivity(intent);
+
+        return false;
     }
 }

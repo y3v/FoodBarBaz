@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yev.foodbarbaz.RestaurantMenu"
+    tools:context="com.example.yev.foodbarbaz.yevoli.example.yev.foodbarbaz.RestaurantMenu"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 

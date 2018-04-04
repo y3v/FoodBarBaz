@@ -1,4 +1,4 @@
-package com.example.yev.foodbarbaz;
+package yevoli.release.yev.foodbarbaz;
 
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -87,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.i("QUERY:", address);
                 address = address.replaceAll(" ", "%20");
                 Log.i("QUERY:", address);
-                URL url = new URL("http://foodbarbaz.onthewifi.com:9090/foodbarbaz-api/myGeoCode/" + address);
+                URL url = new URL("https://foodbarbaz.herokuapp.com/myGeoCode/" + address);
                 HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
                 urlConnection.setRequestProperty("User-Agent", "");
                 urlConnection.setRequestMethod("GET");
