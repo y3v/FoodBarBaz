@@ -1,5 +1,8 @@
 package yevoli.release.yev.foodbarbaz;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,12 +21,13 @@ import android.widget.Toast;
 import POJO.GeolocationService;
 import POJO.User;
 
-public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Intent geolocationIntent;
+    ComponentName geolocationService;
 
     //The value of this user determines what will happen when you press on the account button
     User user = null;
@@ -62,6 +66,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         toggle.syncState();
 
         Log.i("ON CREATE", "SHOULD BE HERE ON CCREATE");
+
+
     }
 
     @Override
@@ -128,8 +134,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
-    public void getGeolocationStarted() {
+    public void getGeolocationServiceStarted() {
         geolocationIntent = new Intent(this, GeolocationService.class);
+        geolocationService = startService(geolocationIntent);
     }
 
     @Override
@@ -171,5 +178,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         startActivity(intent);*/
 
         return false;
+    }
+
+    private class LocalReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
     }
 }
