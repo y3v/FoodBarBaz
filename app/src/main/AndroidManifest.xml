@@ -30,8 +30,7 @@
         <activity android:name="yevoli.release.yev.foodbarbaz.NearbyRestaurantList" />
         <activity android:name="yevoli.release.yev.foodbarbaz.RestaurantMenu" />
         <activity android:name="yevoli.release.yev.foodbarbaz.Settings" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.Login">
-        </activity>
+        <activity android:name="yevoli.release.yev.foodbarbaz.Login"/>
         <activity android:name="yevoli.release.yev.foodbarbaz.RegisterUser" />
         <activity android:name="yevoli.release.yev.foodbarbaz.UserDetails" />
         <!--
@@ -47,6 +46,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Following">
             android:name="yevoli.release.yev.foodbarbaz.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <service android:name="POJO.GeolocationService" />

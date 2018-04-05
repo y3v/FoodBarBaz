@@ -13,6 +13,10 @@
         <item
             android:id="@+id/history_drawer"
             android:title="@string/my_history"></item>
+
+        <item
+            android:id="@+id/following_drawer"
+            android:title="@string/following_drawer"></item>
     </group>
 
     <item android:title="@string/advanced_options">

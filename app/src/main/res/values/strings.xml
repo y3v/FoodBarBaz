@@ -60,4 +60,13 @@
     <string name="big_restaurant_image">Big restaurant image</string>
     <string name="title_activity_maps">Map</string>
     <string name="back_to_list">BACK</string>
+    <string name="following_drawer">Following</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="following">Following</string>
+    <string name="follow_new_people">Follow new people</string>
+    <string name="search_for_new_foodies">Search for new Foodies</string>
+    <string name="who_i_m_following">Who I\'m Following</string>
+    <string name="see_all_on_map">See All on Map</string>
 </resources>
