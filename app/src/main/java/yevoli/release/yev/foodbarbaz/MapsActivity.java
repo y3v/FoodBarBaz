@@ -43,6 +43,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 address = (String)data.get("address");
                 name = (String)data.get("name");
             }
+            if (data.containsKey("latitude") && data.containsKey("longitude")){
+                lat = Double.parseDouble((String)data.get("latitude"));
+                lon = Double.parseDouble((String)data.get("longitude"));
+            }
         }
 
         TextView restName = findViewById(R.id.rest_name);
