@@ -20,20 +20,19 @@
         android:roundIcon="@mipmap/foodbarbaz_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="yevoli.release.yev.foodbarbaz.HomePage">
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="yevoli.release.yev.foodbarbaz.NearbyRestaurantList" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.RestaurantMenu" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.Settings" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.Login">
-        </activity>
-        <activity android:name="yevoli.release.yev.foodbarbaz.RegisterUser" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.UserDetails" />
+        <activity android:name=".NearbyRestaurantList" />
+        <activity android:name=".RestaurantMenu" />
+        <activity android:name=".Settings" />
+        <activity android:name=".Login"></activity>
+        <activity android:name=".RegisterUser" />
+        <activity android:name=".UserDetails" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,8 +46,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="yevoli.release.yev.foodbarbaz.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Following"></activity>
     </application>
 
 </manifest>

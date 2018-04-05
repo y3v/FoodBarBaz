@@ -132,7 +132,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         String buttonPressed = "";
         int id = item.getItemId();
 
-        Log.i("" + id, "jasldkfj");
+        Log.i("" + id, "NAVIGATION OPTION PRESSED");
         switch (id){
             case R.id.about_us_drawer:
                 buttonPressed = "About us";
@@ -150,14 +150,19 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 buttonPressed = "History";
                 break;
 
+            case R.id.following_drawer:
+                Intent intent2 = new Intent(this, Following.class);
+                startActivity(intent2);
+                break;
+
             case R.id.report_drawer:
                 buttonPressed = "Report";
                 break;
         }
 
-        intent.putExtra("navigation", buttonPressed);
+        /*intent.putExtra("navigation", buttonPressed);
         intent.putExtra("user", user);
-        startActivity(intent);
+        startActivity(intent);*/
 
         return false;
     }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp">
+
+
+        <TextView
+            android:id="@+id/textViewFollowingUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:text="TextView"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_on_map"
+            android:background="@color/darkTeal"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

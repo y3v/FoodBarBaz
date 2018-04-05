@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Following">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/teal">
+
+            <TableRow android:layout_margin="0dp">
+
+                <Button
+                    android:id="@+id/buttonSeeFollowing"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/following"
+                    android:layout_weight="0.5"
+                    android:layout_margin="0dp"
+                    android:background="@drawable/frag_buttons"/>
+
+                <Button
+                    android:layout_margin="0dp"
+                    android:id="@+id/buttonSeeSearchList"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/follow_new_people"
+                    android:layout_weight="0.5"
+                    android:background="@color/teal"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <fragment
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="yevoli.release.yev.foodbarbaz.followingList"
+            />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
