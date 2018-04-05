@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import POJO.GeolocationService;
 import POJO.User;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,6 +23,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    Intent geolocationIntent;
 
     //The value of this user determines what will happen when you press on the account button
     User user = null;
@@ -124,6 +126,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
             startActivityForResult(intent, 1);
         }
+    }
+
+    public void getGeolocationStarted() {
+        geolocationIntent = new Intent(this, GeolocationService.class);
     }
 
     @Override
