@@ -1,11 +1,18 @@
 package yevoli.release.yev.foodbarbaz;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,13 +28,13 @@ import android.widget.Toast;
 import POJO.GeolocationService;
 import POJO.User;
 
-public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    Intent geolocationIntent;
-    ComponentName geolocationService;
+    LocationManager locationManager;
+    String lat, lon;
 
     //The value of this user determines what will happen when you press on the account button
     User user = null;
@@ -37,14 +44,14 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         //If user is logged in, or just registered, the User object will be created
         Bundle data = getIntent().getExtras();
-        if (data != null){
-            if (data.containsKey("user")){
+        if (data != null) {
+            if (data.containsKey("user")) {
                 user = data.getParcelable("user");
-                if (user != null){
+                if (user != null) {
                     Log.i("USERNAME----", user.getUsername());
-                    Log.i("PASSWORD----" , user.getPassword());
+                    Log.i("PASSWORD----", user.getPassword());
                     Log.i("FIRSTNAME----", user.getFirstname());
-                    Log.i("EMAIL----" , user.getEmail());
+                    Log.i("EMAIL----", user.getEmail());
                 }
             }
         }
@@ -57,7 +64,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView =findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
@@ -67,6 +74,27 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         Log.i("ON CREATE", "SHOULD BE HERE ON CCREATE");
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        /* if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.;
+            //
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},1);
+            Log.i("lat,lon", "NO PERMISSION");
+            return;
+        }*/
+        @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location != null){
+            lat = "" + location.getLatitude();
+            lon = "" + location.getLongitude();
+
+            Log.i("lat,lon", lat + ", " + lon);
+        }
 
     }
 
@@ -134,11 +162,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
-    public void getGeolocationServiceStarted() {
-        geolocationIntent = new Intent(this, GeolocationService.class);
-        geolocationService = startService(geolocationIntent);
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(this, Settings.class);
@@ -178,13 +201,5 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         startActivity(intent);*/
 
         return false;
-    }
-
-    private class LocalReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-        }
     }
 }

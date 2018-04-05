@@ -33,7 +33,7 @@ class GeolocationService : LocationListener, Service() {
         print("In onStartCommand")
         serviceThread = Thread( Runnable {
             kotlin.run {
-                getGPSCoordsCoarse()
+                // getGPSCoordsCoarse()
                 getGPSCoordsFine()
             }
         })
@@ -64,7 +64,7 @@ class GeolocationService : LocationListener, Service() {
         try {
             Looper.prepare()
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
+            
             val minTime :Long = 0
             val minDistance :Float = 5.0f
 
