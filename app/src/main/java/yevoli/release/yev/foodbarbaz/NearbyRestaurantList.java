@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,7 +76,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
         navigationView =findViewById(R.id.navigation_view);
 
         final TextView title = findViewById(R.id.nearby_restaurant_title);
-        mProgressView = findViewById(R.id.restoProgress);
+        ProgressBar mProgressView = findViewById(R.id.restoProgress);
         restaurantListView = findViewById(R.id.restaurant_list_view);
 
         restaurantListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -124,7 +125,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
         toggle.syncState();
 
         // Queries the webservice
-        WebserviceOperations webserviceOperations = new WebserviceOperations() {
+        WebserviceOperations webserviceOperations = new WebserviceOperations(mProgressView) {
             @Override
             public void onBackgroundTaskCompleted(List<Object> objects) {
                 for (int i = 0; i < objects.size(); i++) {
@@ -135,9 +136,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
             }
         };
 
-        showProgress(true);
         webserviceOperations.execute(query);
-        showProgress(false);
 
         for (int i = 0; i < restaurants.size(); i++) {
             Log.i("Restaurant " + i, restaurants.get(i).toString());
