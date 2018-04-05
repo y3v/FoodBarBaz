@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context="com.example.yev.foodbarbaz.yevoli.example.yev.foodbarbaz.Settings">
+    tools:context="yevoli.release.yev.foodbarbaz.Settings">
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

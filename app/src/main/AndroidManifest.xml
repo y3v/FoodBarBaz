@@ -52,7 +52,7 @@
         <activity android:name=".Following">
             android:name="yevoli.release.yev.foodbarbaz.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <service android:name="POJO.GeolocationService" />
+
     </application>
 
 </manifest>

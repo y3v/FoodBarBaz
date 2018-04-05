@@ -2,6 +2,8 @@ package POJO;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -20,8 +22,10 @@ import com.google.gson.reflect.TypeToken;
 
 public abstract class WebserviceOperations extends AsyncTask<Object, Void, List<Object>> implements BackgroundTask {
 
+    ProgressBar progressBar;
 
-    public WebserviceOperations() {
+    public WebserviceOperations(ProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 
     public abstract void onBackgroundTaskCompleted(List<Object> objects);
@@ -75,5 +79,6 @@ public abstract class WebserviceOperations extends AsyncTask<Object, Void, List<
     protected void onPostExecute(List<Object> objects) {
         super.onPostExecute(objects);
         onBackgroundTaskCompleted(objects);
+        progressBar.setVisibility(View.GONE);
     }
 }
