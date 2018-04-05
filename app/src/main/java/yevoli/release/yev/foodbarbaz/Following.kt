@@ -7,7 +7,11 @@ import adapter.RestaurantListAdapter
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
+import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.MenuItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_following.*
@@ -20,7 +24,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.ArrayList
 
-class Following : AppCompatActivity() {
+class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private var followersList : ArrayList<User>? = null
     //Instantiate the Fragments
@@ -30,6 +38,14 @@ class Following : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_following)
+
+        //Setup navigation drawer
+        navigation_view.setNavigationItemSelectedListener(this)
+
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, include as Toolbar, R.string.open_drawer, R.string.closed_drawer)
+        drawer_layout.addDrawerListener(toggle)
+
+        toggle.syncState()
 
         //Fragment Manager
         supportFragmentManager
@@ -72,7 +88,7 @@ class Following : AppCompatActivity() {
         }
     }
 
-    fun getFollowUsers() {
+    private fun getFollowUsers() {
         val thread = Thread(object : Runnable {
             internal var response = ""
 
