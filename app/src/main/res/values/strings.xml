@@ -72,4 +72,6 @@
     <string name="GPS_not_enabled">GPS SERVICE NOT ENABLED</string>
     <string name="turn_on_location">TURN ON LOCATION</string>
     <string name="cancel">Cancel</string>
+    <string name="scan_my_area">SCAN MY AREA</string>
+    <string name="scan_for_restaurants">Scan for restaurants!</string>
 </resources>

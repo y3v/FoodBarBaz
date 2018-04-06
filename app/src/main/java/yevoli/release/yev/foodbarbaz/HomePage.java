@@ -205,12 +205,24 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     public void scanArea(View v) {
-        EditText query = findViewById(R.id.query);
-
         Intent intent = new Intent(this, NearbyRestaurantList.class);
-        intent.putExtra("query", query.getText().toString());
-        intent.putExtra("user", user);
-        startActivity(intent);
+
+        switch (v.getId()){
+            case R.id.button:
+                EditText query = findViewById(R.id.query);
+
+                intent.putExtra("query", query.getText().toString());
+                intent.putExtra("user", user);
+                startActivity(intent);
+                break;
+
+            case R.id.takeMyLocation:
+                intent.putExtra("latlon",  "" + lat + ":" + lon);
+                intent.putExtra("user", user);
+                startActivity(intent);
+                break;
+        }
+
     }
 
     private void accountPressed(){

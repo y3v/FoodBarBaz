@@ -51,8 +51,8 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
         if (data != null){
             if (data.keySet().contains("query"))
                 query = (String) data.get("query");
-            else
-                query = "H2M 1M2";
+            else if (data.containsKey("latlon"))
+                query = (String) data.get("latlon");
 
             user = data.getParcelable("user");
             if (user!=null){
@@ -128,9 +128,11 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
         WebserviceOperations webserviceOperations = new WebserviceOperations(mProgressView) {
             @Override
             public void onBackgroundTaskCompleted(List<Object> objects) {
-                for (int i = 0; i < objects.size(); i++) {
-                    restaurants.add((Restaurant) objects.get(i));
-                    Log.i("REST",  objects.get(i).toString());
+                if (objects != null){
+                    for (int i = 0; i < objects.size(); i++) {
+                        restaurants.add((Restaurant) objects.get(i));
+                        Log.i("REST",  objects.get(i).toString());
+                    }
                 }
                 setRestaurantList();
             }
