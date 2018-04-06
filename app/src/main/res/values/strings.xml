@@ -69,4 +69,7 @@
     <string name="search_for_new_foodies">Search for new Foodies</string>
     <string name="who_i_m_following">Who I\'m Following</string>
     <string name="see_all_on_map">See All on Map</string>
+    <string name="GPS_not_enabled">GPS SERVICE NOT ENABLED</string>
+    <string name="turn_on_location">TURN ON LOCATION</string>
+    <string name="cancel">Cancel</string>
 </resources>
