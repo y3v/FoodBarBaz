@@ -27,8 +27,26 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.provider.Settings;
+
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Date;
+
 import POJO.GeolocationService;
 import POJO.User;
+import POJO.UserLocation;
+import POJO.WebserviceActions;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,6 +69,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             if (data.containsKey("user")) {
                 user = data.getParcelable("user");
                 if (user != null) {
+                    Log.i("ID--------", "" + user.getId());
                     Log.i("USERNAME----", user.getUsername());
                     Log.i("PASSWORD----", user.getPassword());
                     Log.i("FIRSTNAME----", user.getFirstname());
@@ -218,6 +237,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             Log.i("LOCATION", "INSIDE BLOCK");
             lat = "" + location.getLatitude();
             lon = "" + location.getLongitude();
+
+            if (user != null)
+                WebserviceActions.addUserLocation(lat, lon, user, null);
 
             Log.i("lat,lon", lat + ", " + lon);
         }
