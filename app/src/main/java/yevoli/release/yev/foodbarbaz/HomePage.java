@@ -252,6 +252,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
             case R.id.following_drawer:
                 Intent intent2 = new Intent(this, Following.class);
+                intent2.putExtra("user", user);
                 startActivity(intent2);
                 break;
 

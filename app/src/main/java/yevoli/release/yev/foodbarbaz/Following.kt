@@ -4,6 +4,7 @@ package yevoli.release.yev.foodbarbaz
 import POJO.User
 import adapter.FollowingAdapter
 import adapter.RestaurantListAdapter
+import android.app.FragmentManager
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -31,12 +32,12 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     //The value of this user determines what will happen when you press on the account button
     var user : User? = null
 
-    private var followersList : ArrayList<User>? = null
 
     //Instantiate the Fragments
     var followingList : followingList = yevoli.release.yev.foodbarbaz.followingList.newInstance()
     var searchNewPeople : SearchNewPeople = SearchNewPeople.newInstance()
 
+    var login : PleaseLogIn? = null // do not need to instantiate this yet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,18 +66,42 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
 
         toggle.syncState()
 
+        //Pass the user object to the fragments
+        if (user != null){
+            followingList.setUser(user!!)
+            searchNewPeople.setUser(user!!)
+            println("Following List User: ${followingList.getUser()?.username}")
+        }
+
         //Fragment Manager
-        supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                .add(R.id.fragmentContainer, searchNewPeople)
-                .show(followingList)
-                .hide(searchNewPeople)
-                .commit()
+        println("BACKSTACK COUNT = ${supportFragmentManager.backStackEntryCount}")
+        if (user != null ){
+            println("FRAGMENT MANAGER ADDING")
+            supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .add(R.id.fragmentContainer, followingList)
+                    .show(followingList)
+                    .hide(searchNewPeople)
+                    .commit()
 
+            supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .add(R.id.fragmentContainer, searchNewPeople)
+                    .show(followingList)
+                    .hide(searchNewPeople)
+                    .commit()
+        } else{   //create only one fragment that asks the user to go log in
+            login = PleaseLogIn.newInstance()
 
-        //Get list (Following)
-        getFollowUsers()
+            supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .add(R.id.fragmentContainer, login)
+                    .show(login)
+                    .commit()
+        }
 
         buttonSeeSearchList.setOnClickListener {
 
@@ -85,11 +110,15 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             buttonSeeSearchList.background = getDrawable(R.drawable.frag_buttons)
             buttonSeeFollowing.background = getDrawable(R.color.midTeal)
 
-            supportFragmentManager
-                    .beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .show(searchNewPeople)
-                    .commit()
+            if (user != null){
+                supportFragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .show(searchNewPeople)
+                        .commit()
+            }else{
+                loginFragment(login)
+            }
         }
 
         buttonSeeFollowing.setOnClickListener {
@@ -98,76 +127,24 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             buttonSeeFollowing.background = getDrawable(R.drawable.frag_buttons)
             buttonSeeSearchList.background = getDrawable(R.color.midTeal)
 
-            supportFragmentManager
-                    .beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .hide(searchNewPeople)
-                    .commit()
+            if (user != null){
+                supportFragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(searchNewPeople)
+                        .commit()
+            }else{
+                loginFragment(login)
+            }
         }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun getFollowUsers() {
-        val thread = Thread(object : Runnable {
-            internal var response = ""
 
-            override fun run() {
-                try {
-                    val url = URL("https://foodbarbaz.herokuapp.com/getUsers")
-                    val conn = url.openConnection() as HttpURLConnection
-                    conn.requestMethod = "POST"
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8")
-                    conn.setRequestProperty("Accept", "application/json")
-                    conn.doOutput = true
-                    conn.doInput = true
-
-
-                    val inputStream = conn.inputStream
-                    val responseBuffer = BufferedReader(InputStreamReader(inputStream))
-
-                    var myLine: String? = null
-                    val strBuilder = StringBuilder()
-
-
-                    while ({ myLine = responseBuffer.readLine(); myLine }() != null) {
-                        System.out.println(myLine)
-                        strBuilder.append(myLine)
-                    }
-
-                    Log.i("CONTENT", response)
-                    response = strBuilder.toString()
-
-                    Log.i("STATUS", conn.responseCode.toString())
-                    Log.i("MSG", conn.responseMessage)
-
-                    conn.disconnect()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-                val type = object : TypeToken<ArrayList<User>>() {}.type
-                val gson = Gson()
-                followersList = gson.fromJson<ArrayList<User>>(response, type)
-
-                runOnUiThread {
-                    createUserListAdapter()
-                }
-            }
-        })
-
-        thread.start()
-    }
-
-    fun createUserListAdapter(){
-
-        //Set adapter for followers
-        val followersAdapter = FollowingAdapter(this, followersList)
-        listViewFindFollowers.adapter = followersAdapter
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu_not_home, menu)
@@ -206,5 +183,20 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
             startActivityForResult(intent, 1)
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        println("RESTARTING ACTIVITY")
+
+    }
+
+    private fun loginFragment(login : PleaseLogIn?){
+        supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .show(login)
+                .commit()
     }
 }

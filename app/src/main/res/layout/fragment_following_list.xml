@@ -24,18 +24,27 @@ tools:context=".followingList"
         <ListView
             android:id="@+id/listViewFindFollowers"
             android:layout_width="match_parent"
-            android:layout_height="413dp"
+            android:layout_height="0dp"
             android:layout_below="@+id/textViewWhoFollowing"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:layout_above="@id/buttonFollowAll"/>
 
         <Button
+            android:id="@+id/buttonFollowAll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
             android:background="@color/darkTeal"
             android:text="@string/see_all_on_map"
             android:textColor="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/progressBarFollowing"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 

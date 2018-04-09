@@ -75,12 +75,15 @@
 
             </TableLayout>
 
-            <fragment
+
+            <FrameLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                class="yevoli.release.yev.foodbarbaz.followingList"
+                android:name="yevoli.release.yev.foodbarbaz.followingList"
                 />
+
+
 
         </LinearLayout>
 
