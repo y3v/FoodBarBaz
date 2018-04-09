@@ -145,7 +145,8 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
             @Override
             public void run() {
                 try {
-                    URL url = new URL("https://foodbarbaz.herokuapp.com/login");
+                    URL url = new URL("http://192.168.0.101:8080/login");
+                    // URL url = new URL("https://foodbarbaz.herokuapp.com/login");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");

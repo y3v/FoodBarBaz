@@ -42,15 +42,23 @@ public abstract class WebserviceOperations extends AsyncTask<Object, Void, List<
 
         try{
             String postalCode = postalCodes[0].toString();
+            URL url;
             Log.i("QUERY:", postalCode);
-            postalCode = postalCode.replaceAll(" ", "%20");
-            Log.i("QUERY:", postalCode);
-            URL url = new URL("https://foodbarbaz.herokuapp.com/myRestaurants/" + postalCode);
+
+            if (!postalCode.contains(":")){
+                postalCode = postalCode.replaceAll(" ", "%20");
+                Log.i("QUERY:", postalCode);
+                url = new URL("https://foodbarbaz.herokuapp.com/myRestaurants/" + postalCode);
+            }
+            else
+                url = new URL("https://foodbarbaz.herokuapp.com/myRestaurantsAuto/" + postalCode);
+
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestProperty("User-Agent", "");
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();
+
 
             InputStream inputStream = urlConnection.getInputStream();
             BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(inputStream));
