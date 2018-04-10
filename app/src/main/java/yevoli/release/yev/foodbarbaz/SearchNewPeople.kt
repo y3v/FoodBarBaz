@@ -2,6 +2,7 @@ package yevoli.release.yev.foodbarbaz
 
 import POJO.User
 import adapter.FollowingAdapter
+import adapter.SearchNewAdapter
 import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
@@ -11,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_search_new_people.*
@@ -25,8 +27,10 @@ class SearchNewPeople : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
     private var user : User? = null
+    var searchNewAdapter : SearchNewAdapter? = null
+    private var following : Following? = null
 
-    private lateinit var newFollowersList : ArrayList<User>
+    var newFollowersList : ArrayList<User>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,15 @@ class SearchNewPeople : Fragment() {
 
     fun getUser() : User?{
         return this.user
+    }
+
+    //Set Parent activity
+    fun setParent(following : Following){
+        this.following = following
+    }
+
+    fun getList() : ArrayList<User>?{
+        return newFollowersList
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -136,8 +149,44 @@ class SearchNewPeople : Fragment() {
     fun createUserListAdapter() {
         println("SETTING ADAPTER")
         //Set adapter for followers
-        val followersAdapter = FollowingAdapter(context, newFollowersList)
-        this.listViewFindFoodies.adapter = followersAdapter
+        searchNewAdapter = SearchNewAdapter(context, newFollowersList, user, this)
+        this.listViewFindFoodies.adapter = searchNewAdapter
         //this.progressBarFollowing.visibility = View.GONE
+    }
+
+    fun modifyList(friendName:String, user:User){
+        println("SHOULD BE REMOVING FROM LIST")
+
+        /*for (user in this!!.newFollowersList!!){
+            if (user.username.equals(friendName)){
+                println("REMOVING")
+                newFollowersList?.remove(user)
+            }
+        }*/
+
+        val it = newFollowersList?.iterator()
+        while (it!!.hasNext()) {
+            var temp : User = it.next()
+            if (temp.username.equals(friendName)){
+                it.remove()
+            }
+        }
+
+        following?.followersList?.add(user)
+
+        activity.runOnUiThread {
+            println("NOTIFYING CHANGE LIST")
+            searchNewAdapter?.notifyDataSetChanged()
+            if (following == null){
+                println("PARENT IS NULL!")
+            }
+            following!!.updateList(user)
+            following?.setFollowAddedToast(friendName)
+        }
+    }
+
+    fun updateList(user : User){
+        newFollowersList!!.add(user)
+        searchNewAdapter!!.notifyDataSetChanged()
     }
 }

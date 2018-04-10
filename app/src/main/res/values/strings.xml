@@ -74,4 +74,8 @@
     <string name="cancel">Cancel</string>
     <string name="please_log_in_to_see_who_you_are_following">Please log in to see who you are following!</string>
     <string name="go_to_login_page">Go to Login page</string>
+    <string name="scan_my_area">Scan my area</string>
+    <string name="scan_for_restaurants">Scan for restaurants</string>
+    <string name="follow">Follow</string>
+    <string name="find">FIND</string>
 </resources>

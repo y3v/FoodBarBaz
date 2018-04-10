@@ -4,6 +4,7 @@ package yevoli.release.yev.foodbarbaz
 import POJO.User
 import adapter.FollowingAdapter
 import adapter.RestaurantListAdapter
+import adapter.SearchNewAdapter
 import android.app.FragmentManager
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -36,6 +37,13 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     //Instantiate the Fragments
     var followingList : followingList = yevoli.release.yev.foodbarbaz.followingList.newInstance()
     var searchNewPeople : SearchNewPeople = SearchNewPeople.newInstance()
+
+    var followingAdapter : FollowingAdapter? = null
+    var followersList : ArrayList<User>? = null
+
+    var newFollowList : ArrayList<User>? = null
+    var newfollowingAdapter : SearchNewAdapter? = null
+
 
     var login : PleaseLogIn? = null // do not need to instantiate this yet
 
@@ -70,11 +78,22 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         if (user != null){
             followingList.setUser(user!!)
             searchNewPeople.setUser(user!!)
+
+            //All fragment to communicate with this (parent) activity
+            searchNewPeople.setParent(this)
+            followingList.setParent(this)
+
+            //allow access to adapter to modify list in FollowingList
+            followingAdapter = followingList.getAdapter()
+            followersList = followingList.getList()
+
+            //allow access to adapter to modify list in SearchNewPeople
+            newfollowingAdapter = searchNewPeople.searchNewAdapter
+            newFollowList = searchNewPeople.newFollowersList
             println("Following List User: ${followingList.getUser()?.username}")
         }
 
         //Fragment Manager
-        println("BACKSTACK COUNT = ${supportFragmentManager.backStackEntryCount}")
         if (user != null ){
             println("FRAGMENT MANAGER ADDING")
             supportFragmentManager
@@ -198,5 +217,21 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .show(login)
                 .commit()
+    }
+
+    fun updateList(user : User){
+        followingList.updateList(user)
+    }
+
+    fun updateRemoveList(user : User){
+        searchNewPeople.updateList(user)
+    }
+
+    fun setFollowAddedToast(friendName: String){
+        Toast.makeText(this, "Followed $friendName", Toast.LENGTH_SHORT)
+    }
+
+    fun setFollowRemovedToast(friendName: String){
+        Toast.makeText(this, "Unfollowed $friendName", Toast.LENGTH_SHORT)
     }
 }

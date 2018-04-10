@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -37,6 +38,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
     Toolbar toolBar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    ProgressBar progressBarLogin;
 
     TextInputEditText username;
     TextInputEditText password;
@@ -55,6 +57,9 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        progressBarLogin = findViewById(R.id.progressBarLogin);
+        progressBarLogin.setVisibility(View.GONE);
 
         username = findViewById(R.id.loginUsername);
         password = findViewById(R.id.loginPassword);
@@ -144,9 +149,17 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBarLogin.setVisibility(View.VISIBLE);
+                    }
+                });
+
                 try {
-                    URL url = new URL("http://192.168.0.101:8080/login");
-                    // URL url = new URL("https://foodbarbaz.herokuapp.com/login");
+                    //URL url = new URL("http://192.168.0.101:8080/login");
+                    URL url = new URL("https://foodbarbaz.herokuapp.com/login");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -207,6 +220,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
                         public void run() {
                             username.requestFocus();
                             username.setError(getString(R.string.Incorrect_login));
+                            progressBarLogin.setVisibility(View.GONE);
                         }
                     });
                 }

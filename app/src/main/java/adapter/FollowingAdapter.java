@@ -1,34 +1,35 @@
 package adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
-
-import POJO.Restaurant;
+import yevoli.release.yev.foodbarbaz.followingList;
 import POJO.User;
-import yevoli.release.yev.foodbarbaz.MapsActivity;
 import yevoli.release.yev.foodbarbaz.R;
-import yevoli.release.yev.foodbarbaz.RestaurantMenu;
 
 
 public class FollowingAdapter extends ArrayAdapter<User> {
 
-    public FollowingAdapter(Context context, List<User> objects) {
+    User requester;
+    User friend;
+    Long friendId;
+    followingList followingList;
+    String friendName;
+
+    public FollowingAdapter(Context context, List<User> objects, User user, followingList followingList ) {
         super(context, R.layout.following_list_row, objects);
+        this.requester = user;
+        this.followingList = followingList;
     }
 
     @Override
@@ -37,14 +38,65 @@ public class FollowingAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View followingView = inflater.inflate(R.layout.following_list_row, viewGroup, false);
 
-        User user = getItem(i);
+        final User user = getItem(i);
 
         TextView name = followingView.findViewById(R.id.textViewFollowingUser);
         name.setText(user.getUsername());
 
-        //TO DO : Set listener on button
+        Button unfollowButton = followingView.findViewById(R.id.buttonUnfollow);
+        unfollowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                friendId = user.getId();
+                Log.i("FRIEND ID :::", friendId.toString());
+                friendName = user.getUsername();
+                friend = user;
+                new RemoveFriend().execute();
+            }
+        });
 
         return followingView;
+    }
+
+    private class RemoveFriend extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try{
+                URL url;
+                Log.i("URL FOR ADD FRIEND:", "https://foodbarbaz.herokuapp.com/addFriendship/" + requester.getId() + "/" + friendId);
+                url = new URL("https://foodbarbaz.herokuapp.com/removeFriendship/" + requester.getId()
+                        + "/" + friendId);
+
+                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                urlConnection.setRequestProperty("User-Agent", "");
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setDoInput(true);
+                urlConnection.connect();
+                Log.i("RESPONSE:::", urlConnection.getResponseCode()+"");
+
+                urlConnection.disconnect();
+            }
+            catch(Exception e){
+                Log.e("URL EXCEPTION", e.toString());
+            }
+
+            followingList.modifyList(friendName,friend);
+
+            return "Finished doing in Background to Add Friendship";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
     }
 
 }
