@@ -78,4 +78,7 @@
     <string name="scan_for_restaurants">Scan for restaurants</string>
     <string name="follow">Follow</string>
     <string name="find">FIND</string>
+    <string name="choose_option_friend">Choose Option</string>
+    <string name="placeholder">placeholder</string>
+    <string name="choose_options">Choose Options</string>
 </resources>

@@ -14,6 +14,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/foodbarbaz_round"
@@ -21,19 +28,15 @@
         android:roundIcon="@mipmap/foodbarbaz_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="yevoli.release.yev.foodbarbaz.HomePage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".HomePage">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name="yevoli.release.yev.foodbarbaz.NearbyRestaurantList" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.RestaurantMenu" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.Settings" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.Login"/>
-        <activity android:name="yevoli.release.yev.foodbarbaz.RegisterUser" />
-        <activity android:name="yevoli.release.yev.foodbarbaz.UserDetails" />
+        <activity android:name=".NearbyRestaurantList" />
+        <activity android:name=".RestaurantMenu" />
+        <activity android:name=".Settings" />
+        <activity android:name=".Login" />
+        <activity android:name=".RegisterUser" />
+        <activity android:name=".UserDetails" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -51,8 +54,15 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".Following">
             android:name="yevoli.release.yev.foodbarbaz.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps">
+        </activity>
+        <activity android:name=".Profile">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

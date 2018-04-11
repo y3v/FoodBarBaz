@@ -1,18 +1,25 @@
 package adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
+import dialog.DialogFriendOptions;
 import yevoli.release.yev.foodbarbaz.followingList;
 import POJO.User;
 import yevoli.release.yev.foodbarbaz.R;
@@ -25,11 +32,13 @@ public class FollowingAdapter extends ArrayAdapter<User> {
     Long friendId;
     followingList followingList;
     String friendName;
+    FollowingAdapter followingAdapter;
 
     public FollowingAdapter(Context context, List<User> objects, User user, followingList followingList ) {
         super(context, R.layout.following_list_row, objects);
         this.requester = user;
         this.followingList = followingList;
+        followingAdapter=this;
     }
 
     @Override
@@ -43,7 +52,7 @@ public class FollowingAdapter extends ArrayAdapter<User> {
         TextView name = followingView.findViewById(R.id.textViewFollowingUser);
         name.setText(user.getUsername());
 
-        Button unfollowButton = followingView.findViewById(R.id.buttonUnfollow);
+        ImageButton unfollowButton = followingView.findViewById(R.id.buttonUnfollow);
         unfollowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +60,11 @@ public class FollowingAdapter extends ArrayAdapter<User> {
                 Log.i("FRIEND ID :::", friendId.toString());
                 friendName = user.getUsername();
                 friend = user;
-                new RemoveFriend().execute();
+
+
+                DialogFriendOptions dialog = new DialogFriendOptions();
+                dialog.setParent(followingAdapter);
+                dialog.show(followingList.getParent().getFragmentManager(), "DialogFriendOptions");
             }
         });
 
@@ -97,6 +110,10 @@ public class FollowingAdapter extends ArrayAdapter<User> {
 
         @Override
         protected void onProgressUpdate(Void... values) {}
+    }
+
+    public void removeFriend(){
+        new RemoveFriend().execute();
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -45,7 +46,7 @@ public class SearchNewAdapter  extends ArrayAdapter<User> {
         name.setText(user.getUsername());
 
 
-        Button followButton = followingView.findViewById(R.id.buttonFollow);
+        ImageButton followButton = followingView.findViewById(R.id.buttonFollow);
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

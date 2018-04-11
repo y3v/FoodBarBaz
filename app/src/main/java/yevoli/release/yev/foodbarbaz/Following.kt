@@ -228,10 +228,10 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
     fun setFollowAddedToast(friendName: String){
-        Toast.makeText(this, "Followed $friendName", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Followed $friendName", Toast.LENGTH_SHORT).show()
     }
 
     fun setFollowRemovedToast(friendName: String){
-        Toast.makeText(this, "Unfollowed $friendName", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Unfollowed $friendName", Toast.LENGTH_SHORT).show()
     }
 }

@@ -60,6 +60,9 @@ class followingList : Fragment() {
     fun setParent(following : Following){
         this.following = following
     }
+    fun getParent() : Following?{
+        return following
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

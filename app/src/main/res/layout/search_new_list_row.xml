@@ -15,6 +15,7 @@
 
         <TextView
             android:id="@+id/textViewSearchNewUser"
+            android:textColor="@color/lightTeal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,13 +26,12 @@
             android:paddingLeft="10dp"
             android:layout_marginTop="8dp"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonFollow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/follow"
-            android:background="@color/darkTeal"
-            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:src="@drawable/follow"
             android:padding="10dp"
             android:layout_marginRight="10dp"
             />

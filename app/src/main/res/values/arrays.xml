@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="friend_options">
+        <item>View Profile</item>
+        <item>See on Map</item>
+        <item>Unfollow</item>
+    </string-array>
+
+    <string-array name="camera_options">
+        <item>Choose from Gallery</item>
+        <item>Take picture with Camera</item>
+    </string-array>
+</resources>
