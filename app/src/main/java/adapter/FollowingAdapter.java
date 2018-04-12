@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -20,6 +21,7 @@ import java.net.URL;
 import java.util.List;
 
 import dialog.DialogFriendOptions;
+import yevoli.release.yev.foodbarbaz.FriendProfile;
 import yevoli.release.yev.foodbarbaz.followingList;
 import POJO.User;
 import yevoli.release.yev.foodbarbaz.R;
@@ -114,6 +116,13 @@ public class FollowingAdapter extends ArrayAdapter<User> {
 
     public void removeFriend(){
         new RemoveFriend().execute();
+    }
+
+    public void viewProfile(){
+        Intent intent = new Intent(followingList.getContext(), FriendProfile.class);
+        intent.putExtra("user", requester);
+        intent.putExtra("friend", friend);
+        followingList.startActivity(intent);
     }
 
 }

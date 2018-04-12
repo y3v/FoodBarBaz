@@ -30,6 +30,7 @@ class DialogFriendOptions : DialogFragment() {
                     when(which){
                         0 ->{
                             println("ZERO INDEX")
+                            followingAdapter!!.viewProfile()
                         }
                         1 ->{
                             println("FIRST INDEX")

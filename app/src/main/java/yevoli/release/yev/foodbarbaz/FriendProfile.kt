@@ -19,30 +19,44 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import dialog.DialogProfilePictureOptions
-import kotlinx.android.synthetic.main.activity_profile.*
 import android.graphics.PorterDuffXfermode
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.support.v4.app.ActivityCompat
 import android.util.Base64
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_friend_profile.*
 import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.ArrayList
 
 
-class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //The value of this user determines what will happen when you press on the account button
     var user : User? = null
+    var friend : User? = null
     val cont = this
     var photo : String? = null
+    var friendId : Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_friend_profile)
 
         checkIOPermissions()
+
+        //Setup navigation drawer and toolbar -- Do not forget to implement Navigation View Listener to class
+        navigation_view.setNavigationItemSelectedListener(this)
+        setSupportActionBar(include as Toolbar)
+
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, include as Toolbar, R.string.open_drawer, R.string.closed_drawer)
+        drawer_layout.addDrawerListener(toggle)
+
+        toggle.syncState()
 
         /*Get the user object... should not be null because to get to this page you need
         to go through the Following Activity which does a check*/
@@ -57,31 +71,35 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                     Log.i("EMAIL----", user?.email)
                 }
             }
+            if(data.containsKey("friend")){
+                friend = data.getParcelable("friend")
+                if (friend != null) {
+                    Log.i("USERNAME----", friend?.username)
+                    Log.i("PASSWORD----", friend?.password)
+                    Log.i("FIRSTNAME----", friend?.firstname)
+                    Log.i("EMAIL----", friend?.email)
+                }
+            }
         }
 
         //Start thread that fetches the user profile picture
-        val decodeImage = DecodeImage(cont)
+        val decodeImage = DecodeImage(cont, friend)
         photo = decodeImage.execute().get()
         println("RESPONSE:::: $photo")
-        val decodedString = Base64.decode(photo, Base64.DEFAULT)
-        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-        imageButtonProfilePicture.setImageBitmap(getCroppedBitmap(decodedByte))
+        if (photo != null){
+            val decodedString = Base64.decode(photo, Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            imageViewProfileFriendPicture.setImageBitmap(getCroppedBitmap(decodedByte))
+        }
 
-        //Setup navigation drawer and toolbar -- Do not forget to implement Navigation View Listener to class
-        navigation_view.setNavigationItemSelectedListener(this)
-        setSupportActionBar(include as Toolbar)
-
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, include as Toolbar, R.string.open_drawer, R.string.closed_drawer)
-        drawer_layout.addDrawerListener(toggle)
-
-        toggle.syncState()
+        //Start Thread that fetches the rest of the user information
+        /*val getFriendInfo = GetFriendInfo(friendId)
+        friend = getFriendInfo.execute().get()*/
 
         //Customize the UI Elements based on User information
-        imageButtonProfilePicture.setOnClickListener{
-            val dialog = DialogProfilePictureOptions()
-            dialog.setParent(this)
-            dialog.show(fragmentManager, "Profile Options")
-        }
+        textViewProfileFriendUsername.text = friend!!.username
+        textViewProfileFriendName.text = "${friend!!.firstname} ${friend!!.lastname}"
+        textViewProfileFriendEmail.text = friend!!.email
 
     }
 
@@ -128,39 +146,6 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    fun takePicture(){
-        println("USING CAMERA")
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(packageManager) != null){
-            startActivityForResult(intent, 0)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        println("ON ACTIVITY RESULT")
-
-        when(requestCode){
-            0-> {
-                if (resultCode == Activity.RESULT_OK && data != null){
-                    val profilePic = getCroppedBitmap(data.extras.get("data") as Bitmap)
-                    imageButtonProfilePicture.setImageBitmap(profilePic)
-                    val save = Save()
-                    save.SaveImage(applicationContext, profilePic)
-                    //TODO:Store picture in the DB
-                    val encodeImage = EncodeImage(cont)
-                    encodeImage.execute(profilePic)
-
-                }
-            }
-            else -> {
-                Toast.makeText(this, "Unrecognized Request Code", Toast.LENGTH_SHORT)
-                println("UNCRECOGNIZED REQUEST CODE")
-            }
-        }
-    }
-
     private fun getCroppedBitmap(bitmap: Bitmap): Bitmap {
         val output: Bitmap
 
@@ -202,59 +187,10 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    private class EncodeImage(context: Context) : AsyncTask<Bitmap, Void, Void>() {
+    private class DecodeImage(context: Context, user : User?) : AsyncTask<Void?, Void, String?>() {
 
         private var context = context
-        //private var user = user
-
-        override fun doInBackground(vararg bitmap : Bitmap): Void? {
-
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap[0].compress(Bitmap.CompressFormat.JPEG, 85, byteArrayOutputStream)
-
-            //BLOB
-            var array = byteArrayOutputStream.toByteArray()
-            val encoded_string = Base64.encodeToString(array, Base64.NO_WRAP)
-
-            println("CATCHMEHERE $encoded_string")
-
-            try {
-                val url: URL
-                //Log.i("URL FOR ADD FRIEND:", "https://foodbarbaz.herokuapp.com/addFriendship/" + requester.getId() + "/" + friendId)
-                url = URL("http://192.168.1.5:8080/addProfilePic")
-
-                val jsonParam = JSONObject()
-                jsonParam.put("id", 21)
-                println("LOOKHERE")
-                jsonParam.put("photo", encoded_string)
-                println(jsonParam.toString())
-
-                val urlConnection = url.openConnection() as HttpURLConnection
-                urlConnection.requestMethod = "POST"
-                urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8")
-                urlConnection.setRequestProperty("Accept", "application/json")
-                urlConnection.doInput = true
-                urlConnection.doOutput = true
-
-                val os = DataOutputStream(urlConnection.outputStream)
-                os.writeBytes(jsonParam.toString())
-
-                os.flush()
-                Log.i("RESPONSE:::", urlConnection.responseCode.toString() + "")
-
-                urlConnection.disconnect()
-            } catch (e: Exception) {
-                Log.e("URL EXCEPTION", e.toString())
-            }
-
-            return null
-        }
-    }
-
-    private class DecodeImage(context: Context) : AsyncTask<Void?, Void, String?>() {
-
-        private var context = context
-        //private var user = user
+        private var user = user
 
         override fun doInBackground(vararg bitmap : Void?): String? {
 
@@ -262,7 +198,7 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
 
             try {
                 val url: URL
-                url = URL("http://192.168.1.5:8080/getPhoto/21")
+                url = URL("https://foodbarbaz.herokuapp.com/getPhoto/${user?.id}")
 
                 val urlConnection = url.openConnection() as HttpURLConnection
                 urlConnection.requestMethod = "GET"
@@ -284,6 +220,52 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
             return temp
         }
     }
+
+   /* private class GetFriendInfo(friendId : Long?) : AsyncTask <Void?, Void, User?>(){
+
+        val friendId : Long? = friendId
+        internal var response : String = ""
+        var temp : User? = null
+
+        override fun doInBackground(vararg bitmap : Void?): User? {
+
+            try {
+                val url: URL
+                url = URL("http://192.168.1.5:8080/getUser/$friendId")
+
+                val urlConnection = url.openConnection() as HttpURLConnection
+                urlConnection.requestMethod = "GET"
+                urlConnection.setRequestProperty("User-Agent", "")
+                urlConnection.doInput = true
+                urlConnection.doOutput = true
+
+                val inputStream = urlConnection.inputStream
+                val responseBuffer = BufferedReader(InputStreamReader(inputStream))
+
+                var myLine: String? = null
+                val strBuilder = StringBuilder()
+
+
+                while ({ myLine = responseBuffer.readLine(); myLine }() != null) {
+                    System.out.println(myLine)
+                    strBuilder.append(myLine)
+                }
+
+                Log.i("RESPONSE:::", urlConnection.responseCode.toString() + "")
+
+                urlConnection.disconnect()
+            } catch (e: Exception) {
+                Log.e("URL EXCEPTION", e.toString())
+            }
+
+            val type = object : TypeToken<User>() {}.type
+            val gson = Gson()
+            temp = gson.fromJson<User>(response, type)
+
+            return temp
+        }
+
+    }*/
 }
 
 
