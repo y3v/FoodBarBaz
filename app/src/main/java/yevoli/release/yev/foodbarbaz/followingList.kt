@@ -1,5 +1,6 @@
 package yevoli.release.yev.foodbarbaz
 
+import POJO.Const
 import POJO.User
 import adapter.FollowingAdapter
 import android.net.Uri
@@ -10,10 +11,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_following_list.*
+import kotlinx.android.synthetic.main.fragment_following_list.view.*
+import kotlinx.android.synthetic.main.search_new_list_row.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -71,9 +75,12 @@ class followingList : Fragment() {
         if (user != null){
             val execute = GetFollowers().execute()
         }
+        val followingList = inflater.inflate(R.layout.fragment_following_list, container, false)
+        val buttonFollowAll = followingList.buttonFollowAll
+        buttonFollowAll.setOnClickListener({ Log.i("BUTTON FOLLOW ALL", "CLICKED")})
+        // TODO: LINK TO MAP ACTIVITY.
 
-        return inflater.inflate(R.layout.fragment_following_list, container, false)
-
+        return followingList
     }
 
 
@@ -122,6 +129,7 @@ class followingList : Fragment() {
             println("DO IN BACKGROUND")
 
             try {
+                // val url = URL(Const.OLI_LOCAL_URL + "/getFriends/${user?.id}")
                 val url = URL("https://foodbarbaz.herokuapp.com/getFriends/${user?.id}")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = "POST"

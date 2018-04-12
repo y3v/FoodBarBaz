@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
+import POJO.Const;
 import POJO.User;
 import yevoli.release.yev.foodbarbaz.R;
 import yevoli.release.yev.foodbarbaz.SearchNewPeople;
@@ -69,8 +71,9 @@ public class SearchNewAdapter  extends ArrayAdapter<User> {
             try{
                 URL url;
                 Log.i("URL FOR ADD FRIEND:", "https://foodbarbaz.herokuapp.com/addFriendship/" + requester.getId() + "/" + friendId);
-                url = new URL("https://foodbarbaz.herokuapp.com/addFriendship/" + requester.getId()
-                        + "/" + friendId);
+                url = new URL(Const.getOLI_LOCAL_URL() + "/addFriendship/" + requester.getId() + "/" + friendId);
+                // url = new URL("https://foodbarbaz.herokuapp.com/addFriendship/" + requester.getId()
+                //         + "/" + friendId);
 
                 HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
                 urlConnection.setRequestProperty("User-Agent", "");

@@ -1,5 +1,6 @@
 package yevoli.release.yev.foodbarbaz
 
+import POJO.Const
 import POJO.User
 import adapter.FollowingAdapter
 import adapter.SearchNewAdapter
@@ -97,6 +98,7 @@ class SearchNewPeople : Fragment() {
             println("DO IN BACKGROUND")
 
             try {
+                // val url = URL(Const.OLI_LOCAL_URL + "/getNotFollowing/${user?.id}")
                 val url = URL("https://foodbarbaz.herokuapp.com/getNotFollowing/${user?.id}")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = "POST"
