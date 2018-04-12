@@ -16,6 +16,8 @@ import android.util.Log;
 
 //import com.bumptech.glide.Glide;
 import com.bumptech.glide.Glide;
+
+import POJO.WebserviceActions;
 import yevoli.release.yev.foodbarbaz.MapsActivity;
 import yevoli.release.yev.foodbarbaz.R;
 import yevoli.release.yev.foodbarbaz.RestaurantMenu;
@@ -106,11 +108,12 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> implements O
         seeMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // createMapDialogBox("lon", "lat");
+
                 Intent intent = new Intent(viewGroup.getContext(), MapsActivity.class);
 
-                intent.putExtra("name", restaurant.getName());
-                intent.putExtra("address", restaurant.getAddress());
+                intent.putExtra("mapAction", "restaurant");
+                intent.putExtra("latlon",WebserviceActions.getAddressLocation(restaurant.getAddress(), null));
+                intent.putExtra("restaurant", restaurant);
 
                 viewGroup.getContext().startActivity(intent);
                 Log.i("SEE MAP CLICK", "ITS CLICKED");

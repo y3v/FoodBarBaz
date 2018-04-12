@@ -19,14 +19,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+
+import POJO.Restaurant;
+import POJO.User;
+import POJO.UserLocation;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private double lon = 0.0;
-    private double lat = 0.0;
-    private String address = "";
-    private String name = "";
+    private String action, title, subtitle;
+    private Restaurant restaurant;
+    private User user, friend;
+    private List<User> friends;
+    private LatLng latlon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,22 +44,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         Bundle data = getIntent().getExtras();
+        // mapAction
         if (data != null){
-            if (data.containsKey("address")){
-                address = (String)data.get("address");
-                name = (String)data.get("name");
-            }
-            if (data.containsKey("latitude") && data.containsKey("longitude")){
-                lat = Double.parseDouble((String)data.get("latitude"));
-                lon = Double.parseDouble((String)data.get("longitude"));
+            if (data.containsKey("mapAction")){
+                action = data.getString("mapAction");
+                switch (action){
+                    case "restaurant":
+                        restaurant = (Restaurant) data.get("restaurant");
+                        latlon = (LatLng) data.get("latlon");
+                        title = restaurant.getName();
+                        subtitle = restaurant.getAddress();
+                        break;
+
+                    case "seeFriend":
+                        friend = (User) data.get("friend");
+                        UserLocation loc = (UserLocation) data.get("friendLocation");
+                        latlon = new LatLng(loc.getLatitude(), loc.getLongitude());
+
+                        title = "Your friend @" + friend.getUsername() + " was right there!";
+                        subtitle = "Time to gather your friends and join " + friend.getFirstname() + " :)";
+                        break;
+
+                    case "seeFriends":
+                        break;
+                }
             }
         }
 
         TextView restName = findViewById(R.id.rest_name);
         TextView restAddress = findViewById(R.id.rest_address);
 
-        restName.setText(name);
-        restAddress.setText(address);
+        restName.setText(title);
+        restAddress.setText(subtitle);
 
     }
 
@@ -70,72 +92,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        new WebserviceCoords().execute(address);
-        LatLng montreal = new LatLng(45.5017, 73.5673);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(montreal));
+
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurant));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlon, 18.0f));
+
+        switch (action){
+            case "restaurant":
+                mMap.addMarker(new MarkerOptions().position(latlon).title(restaurant.getAddress()));
+                break;
+
+            case "seeFriend":
+                mMap.addMarker(new MarkerOptions().position(latlon).title(friend.getFirstname() + " " + friend.getLastname()));
+                break;
+
+            case "seeFriends":
+                break;
+        }
+
     }
 
     public void onBackClick(View v){
         finish();
-    }
-
-    private class WebserviceCoords extends AsyncTask<String, Void, String>{
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String response = "";
-
-            try{
-                String address = strings[0].toString();
-
-                Log.i("QUERY:", address);
-                address = address.replaceAll(" ", "%20");
-                Log.i("QUERY:", address);
-                URL url = new URL("https://foodbarbaz.herokuapp.com/myGeoCode/" + address);
-                HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-                urlConnection.setRequestProperty("User-Agent", "");
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setDoInput(true);
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(inputStream));
-
-                String myLine;
-                StringBuilder strBuilder= new StringBuilder();
-
-                while((myLine = responseBuffer.readLine()) != null) {
-                    Log.i("Content: ", myLine);
-                    strBuilder.append(myLine);
-                }
-
-                Log.i("CONTENT", response);
-                response = strBuilder.toString();
-
-            }
-            catch(Exception e){
-                Log.e("URL EXCEPTION", e.toString());
-            }
-
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.i("QUERY:", s);
-
-            if (s != null){
-                String[] strings = s.split("/");
-                lat = Double.parseDouble(strings[0]);
-                lon = Double.parseDouble(strings[1]);
-
-                LatLng restaurant = new LatLng(lat, lon);
-
-                // mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurant));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurant, 18.0f));
-                mMap.addMarker(new MarkerOptions().position(restaurant).title(address));
-            }
-        }
     }
 }

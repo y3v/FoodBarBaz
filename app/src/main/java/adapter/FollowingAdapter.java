@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +20,18 @@ import android.widget.TextView;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
+import POJO.Const;
+import POJO.UserLocation;
+import POJO.WebserviceActions;
 import dialog.DialogFriendOptions;
+import yevoli.release.yev.foodbarbaz.MapsActivity;
 import yevoli.release.yev.foodbarbaz.FriendProfile;
 import yevoli.release.yev.foodbarbaz.followingList;
 import POJO.User;
@@ -116,6 +127,21 @@ public class FollowingAdapter extends ArrayAdapter<User> {
 
     public void removeFriend(){
         new RemoveFriend().execute();
+    }
+
+    public void seeFriendOnMap(){
+        final Context context = getContext();
+        Log.i("LOCATION : ", "BEFORE FUTURE");
+        UserLocation location = WebserviceActions.getFriendLocation(friendId,null);
+        Log.i("LOCATION : ", "AFTER FUTURE");
+        Log.i("FRIEND LOCATION", "" + location.getLongitude() + " , DATE: " + location.getTimestamp());
+
+        Intent intent = new Intent(context, MapsActivity.class);
+        intent.putExtra("mapAction", "seeFriend");
+        intent.putExtra("friend", friend);
+        intent.putExtra("friendLocation", location);
+
+        getContext().startActivity(intent);
     }
 
     public void viewProfile(){

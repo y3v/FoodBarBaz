@@ -33,7 +33,7 @@ class DialogFriendOptions : DialogFragment() {
                             followingAdapter!!.viewProfile()
                         }
                         1 ->{
-                            println("FIRST INDEX")
+                            followingAdapter!!.seeFriendOnMap()
                         }
                         2->{
                             followingAdapter!!.removeFriend()
