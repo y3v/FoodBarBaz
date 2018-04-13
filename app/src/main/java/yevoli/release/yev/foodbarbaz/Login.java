@@ -159,8 +159,8 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
                 });
 
                 try {
-                    URL url = new URL(Const.getOLI_LOCAL_URL() + "/login");
-                    // URL url = new URL("https://foodbarbaz.herokuapp.com/login");
+                    //URL url = new URL(Const.getOLI_LOCAL_URL() + "/login");
+                    URL url = new URL("https://foodbarbaz.herokuapp.com/login");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");

@@ -1,5 +1,6 @@
 package yevoli.release.yev.foodbarbaz
 
+import POJO.ActivityStarter
 import POJO.Save
 import POJO.User
 import android.Manifest
@@ -99,7 +100,11 @@ class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         //Customize the UI Elements based on User information
         textViewProfileFriendUsername.text = friend!!.username
         textViewProfileFriendName.text = "${friend!!.firstname} ${friend!!.lastname}"
-        textViewProfileFriendEmail.text = friend!!.email
+        textViewProfileFriendEmail.text = "Email: ${friend!!.email}"
+
+        buttonProfileFriendBack.setOnClickListener {
+            finish()
+        }
 
     }
 
@@ -129,6 +134,9 @@ class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 intent.putExtra("user", user)
                 startActivity(intent)
             }
+            R.id.social->{
+                ActivityStarter.startSocialActivity(this, user)
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -139,10 +147,10 @@ class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         } else {
-            val intent = Intent(this, UserDetails::class.java)
+            val intent = Intent(this, Profile::class.java)
             intent.putExtra("user", user)
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivityForResult(intent, 1)
+            startActivity(intent)
         }
     }
 

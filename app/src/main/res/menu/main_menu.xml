@@ -11,6 +11,12 @@
         android:title="@string/account"
         app:showAsAction="always|withText" />
     <item
+        android:id="@+id/social"
+        android:icon="@drawable/social"
+        android:orderInCategory="160"
+        android:title="@string/social"
+        app:showAsAction="ifRoom|withText" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="180"
         android:title="@string/settings"

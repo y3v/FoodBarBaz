@@ -1,6 +1,7 @@
 package yevoli.release.yev.foodbarbaz
 
 
+import POJO.ActivityStarter
 import POJO.User
 import adapter.FollowingAdapter
 import adapter.RestaurantListAdapter
@@ -198,10 +199,10 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         } else {
-            val intent = Intent(this, UserDetails::class.java)
+            val intent = Intent(this, Profile::class.java)
             intent.putExtra("user", user)
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivityForResult(intent, 1)
+            startActivity(intent)
         }
     }
 
@@ -235,4 +236,6 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     fun setFollowRemovedToast(friendName: String){
         Toast.makeText(this, "Unfollowed $friendName", Toast.LENGTH_SHORT).show()
     }
+
+
 }

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import POJO.ActivityStarter;
 import POJO.Restaurant;
 import POJO.User;
 import POJO.WebserviceOperations;
@@ -172,6 +173,9 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
             case R.id.account:
                 accountPressed();
                 break;
+            case R.id.social:
+                ActivityStarter.startSocialActivity(this, user);
+                break;
             case Menu.FIRST:
                 Toast.makeText(this, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
                 user = null;
@@ -280,10 +284,10 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(this, UserDetails.class);
+            Intent intent = new Intent(this, Profile.class);
             intent.putExtra("user", user);
             //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivityForResult(intent, 1);
+            startActivity(intent);
         }
     }
 

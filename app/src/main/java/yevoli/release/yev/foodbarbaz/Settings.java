@@ -139,10 +139,9 @@ public class Settings extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            //TO DO: set up intent for Display Accounts page!
-            //Intent intent = new Intent()
-            //intent.putExtra("user", user);
-            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, Profile.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
         }
     }
 }
