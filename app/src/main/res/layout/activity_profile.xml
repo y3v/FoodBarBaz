@@ -8,7 +8,8 @@
     tools:context=".Profile"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    >
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
@@ -41,11 +42,47 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:text="@string/my_profile"
+                        android:textSize="35sp"
+                        android:textAlignment="center"
+                        android:paddingTop="20dp"
+                        android:textColor="@color/teal"
+                        />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/edit"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/rounded_button_teal"
+                        android:padding="8dp"
+                        />
+
+                </LinearLayout>
 
                 <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:elevation="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:outlineProvider="bounds">
 
                     <TableRow>
 
@@ -54,8 +91,8 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginTop="30dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginBottom="20dp"
                             android:layout_weight="1"
                             android:src="@mipmap/foodbarbaz_round"
@@ -71,58 +108,89 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="5"
                             android:layout_marginTop="60dp"
-                            android:layout_marginRight="10dp"
-                            android:textSize="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="30sp"
                             android:text="@string/placeholder"/>
 
                     </TableRow>
 
                 </TableLayout>
 
-                <TextView
-                    android:id="@+id/textViewProfileName"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="30dp"
-                    android:text="@string/placeholder"
-                    android:textSize="25sp"
-                    android:textAlignment="center"
-                    />
+                    android:background="@color/white"
+                    android:outlineProvider="bounds"
+                    android:elevation="10dp"
+                    android:paddingBottom="15dp"
+                    android:layout_marginBottom="60dp"
+                    >
 
-                <TextView
-                    android:id="@+id/textViewProfileEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/placeholder"
-                    android:textSize="25sp"
-                    android:textAlignment="center"
-                    />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/teal"
+                        android:text="@string/my_details"
+                        android:textSize="30sp"
+                        android:textAlignment="center"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        />
 
-                <TextView
-                    android:id="@+id/textViewProfileCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/placeholder"
-                    android:textSize="25sp"
-                    android:textAlignment="center"
-                    />
+                    <TextView
+                        android:id="@+id/textViewProfileName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/placeholder"
+                        android:textSize="25sp"
+                        android:textAlignment="center"
+                        />
 
-                <Button
-                    android:id="@+id/buttonProfileBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:paddingHorizontal="30dp"
-                    android:paddingVertical="15dp"
-                    android:text="@string/back"
-                    android:textSize="25sp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@color/darkTeal"
-                    android:textStyle="bold"
-                    />
+                    <TextView
+                        android:id="@+id/textViewProfileEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/placeholder"
+                        android:textSize="25sp"
+                        android:textAlignment="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/textViewProfileCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/placeholder"
+                        android:textSize="25sp"
+                        android:textAlignment="center"
+                        />
+
+                    <Button
+                        android:id="@+id/buttonProfileBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:paddingHorizontal="30dp"
+                        android:paddingVertical="15dp"
+                        android:text="@string/back"
+                        android:textSize="25sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@color/teal"
+                        android:textStyle="bold"
+                        android:stateListAnimator="@null"
+                        android:elevation="2dp"
+                        android:outlineProvider="bounds"
+                        android:layout_marginBottom="30dp"
+                        />
+                </LinearLayout>
 
             </LinearLayout>
 

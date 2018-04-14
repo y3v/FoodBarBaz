@@ -44,6 +44,7 @@ class DialogProfilePictureOptions : DialogFragment() {
                         0->{
                             //GALLERY
                             println("USING GALLERY")
+                            profile?.getPhotoFromGallery()
 
                         }
                         1->{

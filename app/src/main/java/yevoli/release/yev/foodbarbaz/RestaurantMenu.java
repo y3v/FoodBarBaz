@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import POJO.ActivityStarter;
 import POJO.MenuItem;
 import POJO.Restaurant;
 import POJO.User;
@@ -182,6 +183,9 @@ public class RestaurantMenu extends AppCompatActivity implements NavigationView.
             case R.id.account:
                 accountPressed();
                 break;
+            case R.id.social:
+                ActivityStarter.startSocialActivity(this, user);
+                break;
             case Menu.FIRST:
                 Toast.makeText(this, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
                 user = null;
@@ -210,9 +214,10 @@ public class RestaurantMenu extends AppCompatActivity implements NavigationView.
         }
         else{
             //TO DO: set up intent for Display Accounts page!
-            //Intent intent = new Intent()
-            //intent.putExtra("user", user);
-            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, Profile.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
         }
     }
 }

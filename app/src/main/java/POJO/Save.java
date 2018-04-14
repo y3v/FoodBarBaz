@@ -33,7 +33,7 @@ public class Save {
 
         try{
             FileOutputStream fOut = new FileOutputStream(file);
-            imageToSave.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+            imageToSave.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
             fOut.flush();
             fOut.close();
             MakeSureFileWasCreated(file);

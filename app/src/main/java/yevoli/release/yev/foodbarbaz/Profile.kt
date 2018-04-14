@@ -1,5 +1,6 @@
 package yevoli.release.yev.foodbarbaz
 
+import POJO.ActivityStarter
 import POJO.Save
 import POJO.User
 import android.Manifest
@@ -60,12 +61,14 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         //Start thread that fetches the user profile picture
-        val decodeImage = DecodeImage(cont)
+        val decodeImage = DecodeImage(cont, user)
         photo = decodeImage.execute().get()
         println("RESPONSE:::: $photo")
-        val decodedString = Base64.decode(photo, Base64.DEFAULT)
-        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-        imageButtonProfilePicture.setImageBitmap(getCroppedBitmap(decodedByte))
+        if (photo != null){
+            val decodedString = Base64.decode(photo, Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            imageButtonProfilePicture.setImageBitmap(getCroppedBitmap(decodedByte))
+        }
 
         //Setup navigation drawer and toolbar -- Do not forget to implement Navigation View Listener to class
         navigation_view.setNavigationItemSelectedListener(this)
@@ -81,6 +84,15 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
             val dialog = DialogProfilePictureOptions()
             dialog.setParent(this)
             dialog.show(fragmentManager, "Profile Options")
+        }
+        textViewProfileUsername.text = user?.username
+        textViewProfileName.text = "${user?.firstname} ${user?.lastname}"
+        textViewProfileEmail.text = "Email: ${user?.email}"
+
+
+
+        buttonProfileBack.setOnClickListener {
+            finish()
         }
 
     }
@@ -111,6 +123,9 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                 intent.putExtra("user", user)
                 startActivity(intent)
             }
+            R.id.social->{
+                ActivityStarter.startSocialActivity(this, user)
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -121,10 +136,7 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         } else {
-            val intent = Intent(this, UserDetails::class.java)
-            intent.putExtra("user", user)
-            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivityForResult(intent, 1)
+            Toast.makeText(this,"Already viewing your profile", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -148,8 +160,20 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                     imageButtonProfilePicture.setImageBitmap(profilePic)
                     val save = Save()
                     save.SaveImage(applicationContext, profilePic)
-                    //TODO:Store picture in the DB
-                    val encodeImage = EncodeImage(cont)
+                    val encodeImage = EncodeImage(cont, user)
+                    encodeImage.execute(profilePic)
+
+                }
+            }
+            1->{
+                if (resultCode == Activity.RESULT_OK && data != null){
+                    val imageUri = data?.data
+                    val imageStream = contentResolver.openInputStream(imageUri)
+                    val profilePic = BitmapFactory.decodeStream(imageStream)
+                    val save = Save()
+                    imageButtonProfilePicture.setImageBitmap(getCroppedBitmap(profilePic))
+                    save.SaveImage(applicationContext, profilePic)
+                    val encodeImage = EncodeImage(cont, user)
                     encodeImage.execute(profilePic)
 
                 }
@@ -202,10 +226,10 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
 
     }
 
-    private class EncodeImage(context: Context) : AsyncTask<Bitmap, Void, Void>() {
+    private class EncodeImage(context: Context, user : User?) : AsyncTask<Bitmap, Void, Void>() {
 
         private var context = context
-        //private var user = user
+        private var user = user
 
         override fun doInBackground(vararg bitmap : Bitmap): Void? {
 
@@ -221,10 +245,10 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
             try {
                 val url: URL
                 //Log.i("URL FOR ADD FRIEND:", "https://foodbarbaz.herokuapp.com/addFriendship/" + requester.getId() + "/" + friendId)
-                url = URL("http://192.168.1.5:8080/addProfilePic")
+                url = URL("https://foodbarbaz.herokuapp.com/addProfilePic")
 
                 val jsonParam = JSONObject()
-                jsonParam.put("id", 21)
+                jsonParam.put("id", user?.id)
                 println("LOOKHERE")
                 jsonParam.put("photo", encoded_string)
                 println(jsonParam.toString())
@@ -251,10 +275,10 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    private class DecodeImage(context: Context) : AsyncTask<Void?, Void, String?>() {
+    private class DecodeImage(context: Context, user : User?) : AsyncTask<Void?, Void, String?>() {
 
         private var context = context
-        //private var user = user
+        private var user = user
 
         override fun doInBackground(vararg bitmap : Void?): String? {
 
@@ -262,7 +286,7 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
 
             try {
                 val url: URL
-                url = URL("http://192.168.1.5:8080/getPhoto/21")
+                url = URL("https://foodbarbaz.herokuapp.com/getPhoto/${user?.id}")
 
                 val urlConnection = url.openConnection() as HttpURLConnection
                 urlConnection.requestMethod = "GET"
@@ -283,6 +307,12 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
 
             return temp
         }
+    }
+
+    fun getPhotoFromGallery(){
+        val photoPickerIntent = Intent(Intent.ACTION_GET_CONTENT)
+        photoPickerIntent.type = "image/*"
+        startActivityForResult(photoPickerIntent, 1)
     }
 }
 

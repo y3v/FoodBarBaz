@@ -6,7 +6,7 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/search"
-        android:icon="@drawable/search"
+        android:icon="@drawable/home"
         android:orderInCategory="160"
         android:title="@string/backToHome"
         app:showAsAction="always|withText" />
@@ -16,6 +16,13 @@
         android:orderInCategory="160"
         android:title="@string/account"
         app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/social"
+        android:icon="@drawable/social"
+        android:orderInCategory="160"
+        android:title="@string/social"
+        app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="180"
@@ -26,5 +33,4 @@
         android:orderInCategory="200"
         android:title="@string/favourites"
         app:showAsAction="never" />
-
 </menu>
