@@ -178,32 +178,10 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        when (id) {
-            R.id.action_settings -> Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
-            R.id.action_favs -> Toast.makeText(this, "Favourites Clicked", Toast.LENGTH_SHORT).show()
-            R.id.account -> accountPressed()
-            R.id.search -> {
-                val intent = Intent(applicationContext, HomePage::class.java)
-                intent.putExtra("user", user)
-                startActivity(intent)
-            }
-        }
+        ActivityStarter.OptionsItemsSelected(this, user, item)
 
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun accountPressed() {
-        if (user == null) {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-        } else {
-            val intent = Intent(this, Profile::class.java)
-            intent.putExtra("user", user)
-            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivity(intent)
-        }
     }
 
     override fun onRestart() {

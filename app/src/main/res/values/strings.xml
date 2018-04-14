@@ -85,4 +85,6 @@
     <string name="details">Details</string>
     <string name="social">Social</string>
     <string name="my_profile">My Profile</string>
+    <string name="my_search_history">My Search History</string>
+    <string name="oops">Oops!</string>
 </resources>

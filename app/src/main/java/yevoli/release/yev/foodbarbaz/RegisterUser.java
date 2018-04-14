@@ -19,10 +19,15 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import POJO.ActivityStarter;
 import POJO.User;
 
 public class RegisterUser extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -143,20 +148,7 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch(id){
-            case R.id.action_settings:
-                Toast.makeText(this,"Settings Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_favs:
-                Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.search:
-                Intent intent = new Intent(getApplicationContext(),HomePage.class);
-                startActivity(intent);
-                break;
-        }
+        ActivityStarter.OptionsItemsSelected(this, null, item);
 
         return super.onOptionsItemSelected(item);
     }
@@ -198,7 +190,7 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
 
     public void sendPost() {
         Thread thread = new Thread(new Runnable() {
-            String response = "";
+            Long response ;
 
             @Override
             public void run() {
@@ -226,12 +218,16 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
 
                     os.flush();
 
+                    InputStream is = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    response = Long.parseLong(reader.readLine());
+
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
 
                     if (conn.getResponseCode() == 200){
                         //ID is auto-generated so I pass a 0 because constructor needs it
-                        User user = new User(0, username.getText().toString(),
+                        User user = new User(response, username.getText().toString(),
                                 password.getText().toString(),
                                 firstname.getText().toString(),
                                 lastname.getText().toString(),

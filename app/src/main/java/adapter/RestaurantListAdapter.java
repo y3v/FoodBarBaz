@@ -17,6 +17,8 @@ import android.util.Log;
 //import com.bumptech.glide.Glide;
 import com.bumptech.glide.Glide;
 
+import POJO.Favourites;
+import POJO.User;
 import POJO.WebserviceActions;
 import yevoli.release.yev.foodbarbaz.MapsActivity;
 import yevoli.release.yev.foodbarbaz.R;
@@ -39,9 +41,11 @@ import POJO.Restaurant;
 public class RestaurantListAdapter extends ArrayAdapter<Restaurant> implements OnMapReadyCallback{
 
     private GoogleMap mMap;
+    private User user;
 
-    public RestaurantListAdapter(Context context, List<Restaurant> objects) {
+    public RestaurantListAdapter(Context context, List<Restaurant> objects, User user) {
         super(context, R.layout.restaurant_list_item, objects);
+        this.user = user;
     }
 
 
@@ -68,10 +72,18 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> implements O
                 if (favorited.isChecked()){
                     Toast.makeText(getContext(), name.getText() + " added to Favourites!", Toast.LENGTH_SHORT).show();
                     favorited.setBackground(getContext().getDrawable(R.drawable.favs_on));
+                    if (user != null){
+                        Favourites.getList(getContext(),user.getId()).add(name.getText().toString());
+                        Favourites.addToList(name.getText().toString(), user.getId());
+                    }
                 }
                 else{
                     Toast.makeText(getContext(), name.getText() + " removed Favourites!", Toast.LENGTH_SHORT).show();
                     favorited.setBackground(getContext().getDrawable(R.drawable.favs));
+                    if (user != null){
+                        Favourites.getList(getContext(),user.getId()).remove(name.getText().toString());
+                        Favourites.removeFromList(name.getText().toString(), user.getId());
+                    }
                 }
 
             }
@@ -84,6 +96,15 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> implements O
         address.setText(restaurant.getAddress());
         //category.setText(restaurant.getCategory());
         rating.setText(restaurant.getRating() + "/5");
+
+        //Cycle through favourites, turn on the favourites icon if true
+        for (String s: Favourites.getList(getContext(),user.getId())) {
+            Log.i("FAV:", name.getText().toString() + '/' + s);
+            if (name.getText().toString().equals(s)){
+                favorited.setBackground(getContext().getDrawable(R.drawable.favs_on));
+                favorited.setChecked(true);
+            }
+        }
 
         //GLIDE IS A LIBRARY THAT EASILY ALLOWS ONE TO EXTRACT BITMAPS FROM URL
         //if there is a problem extractng, a placeholder is declared

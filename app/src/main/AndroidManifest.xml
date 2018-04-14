@@ -60,9 +60,10 @@
             android:name="yevoli.release.yev.foodbarbaz.MapsActivity"
             android:label="@string/title_activity_maps">
         </activity>
-        <activity android:name=".Profile">
-        </activity>
-        <activity android:name=".FriendProfile"></activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".FriendProfile" />
+        <activity android:name=".SearchHistory" />
+        <activity android:name=".Favourites"></activity>
     </application>
 
 </manifest>

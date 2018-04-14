@@ -29,6 +29,7 @@ import java.util.List;
 
 import POJO.ActivityStarter;
 import POJO.Restaurant;
+import POJO.SearchHistory;
 import POJO.User;
 import POJO.WebserviceOperations;
 import adapter.RestaurantListAdapter;
@@ -140,6 +141,19 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
         };
 
         webserviceOperations.execute(query);
+        if (user != null){
+            if(!SearchHistory.getList(this, user.getId()).contains(query)){
+                SearchHistory.getList(this, user.getId()).add(0, query);
+                SearchHistory.addToList(query, user.getId());
+            }
+            else{
+                SearchHistory.getList(this, user.getId()).remove(query);
+                SearchHistory.getList(this, user.getId()).add(0, query);
+                SearchHistory.removeFromList(query, user.getId());
+                SearchHistory.addToList(query, user.getId());
+                //This is done to change the position of the query to go back to the top
+            }
+        }
 
         for (int i = 0; i < restaurants.size(); i++) {
             Log.i("Restaurant " + i, restaurants.get(i).toString());
@@ -161,38 +175,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch(id){
-            case R.id.action_settings:
-                Toast.makeText(this,"Settings Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_favs:
-                Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.account:
-                accountPressed();
-                break;
-            case R.id.social:
-                ActivityStarter.startSocialActivity(this, user);
-                break;
-            case Menu.FIRST:
-                Toast.makeText(this, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
-                user = null;
-                getIntent().removeExtra("user");
-                Intent intent = getIntent();
-                overridePendingTransition(0, 0);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(intent);
-                break;
-            case R.id.search:
-                intent = new Intent(getApplicationContext(),HomePage.class);
-                intent.putExtra("user",user);
-                startActivity(intent);
-                break;
-        }
+        ActivityStarter.OptionsItemsSelected(this, user, item);
 
         return super.onOptionsItemSelected(item);
     }
@@ -200,7 +183,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
     public void setRestaurantList(){
         // Custom ListView create
 
-        ListAdapter restaurantAdapter = new RestaurantListAdapter(this, restaurants);
+        ListAdapter restaurantAdapter = new RestaurantListAdapter(this, restaurants, user);
 
         restaurantListView.setAdapter(restaurantAdapter);
     }

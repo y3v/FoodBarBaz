@@ -2,8 +2,19 @@ package POJO;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import yevoli.release.yev.foodbarbaz.Favourites;
 import yevoli.release.yev.foodbarbaz.Following;
+import yevoli.release.yev.foodbarbaz.HomePage;
+import yevoli.release.yev.foodbarbaz.Login;
+import yevoli.release.yev.foodbarbaz.Profile;
+import yevoli.release.yev.foodbarbaz.R;
+import yevoli.release.yev.foodbarbaz.SearchHistory;
 
 public class ActivityStarter {
 
@@ -11,6 +22,102 @@ public class ActivityStarter {
         Intent intent = new Intent(activity, Following.class);
         intent.putExtra("user", user);
         activity.startActivity(intent);
+    }
+
+    public static void startHistoryActivity(Activity activity, User user){
+        Intent intent = new Intent(activity, SearchHistory.class);
+        intent.putExtra("user", user);
+        activity.startActivity(intent);
+    }
+
+    public static void startFavouritesActivity(Activity activity, User user){
+        Intent intent = new Intent(activity, Favourites.class);
+        intent.putExtra("user", user);
+        activity.startActivity(intent);
+    }
+
+    public static void startHomepage(Activity activity, User user){
+        Intent intent = new Intent(activity, HomePage.class);
+        intent.putExtra("user", user);
+        activity.startActivity(intent);
+    }
+
+    public static void NavigationItemSelected(Activity activity, User user, @NonNull MenuItem item){
+        int id = item.getItemId();
+
+        Log.i("" + id, "NAVIGATION OPTION PRESSED");
+        switch (id){
+            case R.id.about_us_drawer:
+                break;
+
+            case R.id.favourites_drawer:
+                ActivityStarter.startFavouritesActivity(activity, user);
+                break;
+
+            case R.id.app_settings_drawer:
+                break;
+
+            case R.id.history_drawer:
+                Intent intentHistory = new Intent(activity, SearchHistory.class);
+                intentHistory.putExtra("user", user);
+                activity.startActivity(intentHistory);
+                break;
+
+            case R.id.following_drawer:
+                Intent intent2 = new Intent(activity, Following.class);
+                intent2.putExtra("user", user);
+                activity.startActivity(intent2);
+                break;
+
+            case R.id.report_drawer:
+                break;
+        }
+    }
+
+    public static void OptionsItemsSelected(Activity activity, User user, @NonNull MenuItem item){
+        int id = item.getItemId();
+
+        switch(id){
+            case R.id.action_settings:
+                Toast.makeText(activity,"Settings Clicked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_favs:
+                Toast.makeText(activity,"Favourites Clicked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.account:
+                accountPressed(activity, user);
+                break;
+            case R.id.social:
+                ActivityStarter.startSocialActivity(activity, user);
+                break;
+            case R.id.search:
+                ActivityStarter.startHomepage(activity, user);
+                break;
+            case Menu.FIRST:
+                Toast.makeText(activity, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
+                user = null;
+                activity.getIntent().removeExtra("user");
+                Intent intent = activity.getIntent();
+                activity.overridePendingTransition(0, 0);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                activity.finish();
+                activity.overridePendingTransition(0, 0);
+                activity.startActivity(intent);
+                break;
+        }
+    }
+
+    private static void accountPressed(Activity activity, User user){
+        if (user == null){
+            Intent intent = new Intent(activity, Login.class);
+            activity.startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(activity, Profile.class);
+            intent.putExtra("user", user);
+            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
+            activity.startActivity(intent);
+        }
     }
 
 }

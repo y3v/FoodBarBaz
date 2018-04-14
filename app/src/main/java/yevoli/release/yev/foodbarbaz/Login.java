@@ -31,6 +31,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import POJO.ActivityStarter;
 import POJO.Const;
 import POJO.User;
 
@@ -122,25 +123,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch(id){
-            case R.id.action_settings:
-                Toast.makeText(this,"Settings Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_favs:
-                Toast.makeText(this,"Favourites Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.account:
-                accountPressed();
-                break;
-            case R.id.search:
-                Intent intent = new Intent(getApplicationContext(),HomePage.class);
-                intent.putExtra("user",user);
-                startActivity(intent);
-                break;
-        }
-
+        ActivityStarter.OptionsItemsSelected(this, user, item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -229,19 +212,6 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
         });
 
         thread.start();
-    }
-
-    private void accountPressed(){
-        if (user == null){
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-        }
-        else{
-            //TO DO: set up intent for Display Accounts page!
-            //Intent intent = new Intent()
-            //intent.putExtra("user", user);
-            Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
