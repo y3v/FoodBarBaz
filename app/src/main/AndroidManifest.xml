@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="yevoli.release.yev.foodbarbaz">
 
     <uses-configuration android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera2"
@@ -29,9 +30,7 @@
         android:roundIcon="@mipmap/foodbarbaz_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomePage">
-
-        </activity>
+        <activity android:name=".HomePage"></activity>
         <activity android:name=".NearbyRestaurantList" />
         <activity android:name=".RestaurantMenu" />
         <activity android:name=".Settings" />
@@ -52,8 +51,7 @@
 
         <activity
             android:name="io.kickflip.sdk.activity.BroadcastActivity"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -61,7 +59,7 @@
             android:name="yevoli.release.yev.foodbarbaz.MapsActivity"
             android:label="@string/title_activity_maps">
         </activity>
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".Profile" />
         <activity android:name=".FriendProfile" />
         <activity android:name=".BroadcastActivity">
             <intent-filter>
@@ -70,7 +68,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".StreamingActivity"
+            android:label="@string/title_activity_streaming"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

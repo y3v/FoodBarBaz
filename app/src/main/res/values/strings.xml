@@ -81,4 +81,17 @@
     <string name="choose_option_friend">Choose Option</string>
     <string name="placeholder">placeholder</string>
     <string name="choose_options">Choose Options</string>
+<<<<<<< Updated upstream
+=======
+    <string name="my_details">My Details</string>
+    <string name="details">Details</string>
+    <string name="social">Social</string>
+    <string name="my_profile">My Profile</string>
+    <string name="title_activity_streaming">StreamingActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+>>>>>>> Stashed changes
 </resources>
