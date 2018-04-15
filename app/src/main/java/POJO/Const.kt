@@ -17,6 +17,9 @@ class Const {
         @JvmStatic val OLI_LOCAL_URL : String = "http://192.168.15.115:8080"
         @JvmStatic val CLIENT_ID :String = "I!8mHatelK1iV.-O-?-AYm_lq2tETVbP=ij?i9UE"
         @JvmStatic val CLIENT_SECRET :String = "zdFaY3o=dc7hZeMThTXJ=MUMUaZVTdFA:IP0Ty792qzbog.vKd3M3KuaoLX=bWvL9Ktbbd46Vw-6a5P@g7.vfcos0I7iHWRDkBovXG0Yo2x=qLv17tlz;-JMKl::gje4"
+        @JvmStatic val R5_SDK_LICENSE :String = ""
+        @JvmStatic val R5_PRO_LOCAL_SERVER :String = "http://localhost"
+        @JvmStatic val R5_PRO_SERVER :String = ""
 
         @JvmStatic fun create720pSessionConfig(outputPath: String): SessionConfig {
             val extraData = HashMap<String,String>()

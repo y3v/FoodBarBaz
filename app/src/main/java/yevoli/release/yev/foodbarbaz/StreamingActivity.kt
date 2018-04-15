@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -17,8 +18,12 @@ import android.view.ViewGroup
 
 import kotlinx.android.synthetic.main.activity_streaming.*
 import kotlinx.android.synthetic.main.fragment_streaming.view.*
+import java.util.*
+import android.Manifest
+import android.net.Uri
+import android.webkit.PermissionRequest
 
-class StreamingActivity : AppCompatActivity() {
+class StreamingActivity : AppCompatActivity(), StreamFragment.OnFragmentInteractionListener  {
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -37,6 +42,7 @@ class StreamingActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+        println("BEFORE ADAPTER")
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         // Set up the ViewPager with the sections adapter.
@@ -44,11 +50,13 @@ class StreamingActivity : AppCompatActivity() {
 
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
-
+        println("AFTER ADAPTER")
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+
         }
+
+
+        ActivityCompat.requestPermissions(this, Array(1, { Manifest.permission.CAMERA }), 1)
 
     }
 
@@ -72,22 +80,37 @@ class StreamingActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onFragmentInteraction(uri: Uri) {
+    }
+
 
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
+    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm){
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1)
+            when (position){
+                0 -> return StreamFragment.newInstance()
+            }
+            return StreamFragment.newInstance()
         }
 
         override fun getCount(): Int {
-            // Show 3 total pages.
-            return 3
+            // Show 2 total pages.
+            return 2
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+
+            when (position) {
+                0 -> return "Stream"
+                1 -> return "Watch"
+            }
+
+            return super.getPageTitle(position)
         }
     }
 

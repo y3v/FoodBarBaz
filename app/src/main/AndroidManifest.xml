@@ -30,7 +30,7 @@
         android:roundIcon="@mipmap/foodbarbaz_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomePage"></activity>
+        <activity android:name=".HomePage" />
         <activity android:name=".NearbyRestaurantList" />
         <activity android:name=".RestaurantMenu" />
         <activity android:name=".Settings" />
@@ -51,7 +51,7 @@
 
         <activity
             android:name="io.kickflip.sdk.activity.BroadcastActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -61,17 +61,23 @@
         </activity>
         <activity android:name=".Profile" />
         <activity android:name=".FriendProfile" />
-        <activity android:name=".BroadcastActivity">
+        <activity android:name=".BroadcastActivity"></activity>
+        <activity
+            android:name=".StreamingActivity"
+            android:label="@string/title_activity_streaming"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <activity
+            android:name=".BasicStreamActivity"
+            android:label="@string/title_activity_basic_stream"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".StreamingActivity"
-            android:label="@string/title_activity_streaming"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
