@@ -87,4 +87,13 @@
     <string name="my_profile">My Profile</string>
     <string name="my_search_history">My Search History</string>
     <string name="oops">Oops!</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save_changes">Save my changes</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_account">Delete Account</string>
 </resources>

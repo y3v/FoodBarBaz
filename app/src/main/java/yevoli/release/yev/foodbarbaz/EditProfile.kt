@@ -9,40 +9,42 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import dialog.DialogProfilePictureOptions
-import kotlinx.android.synthetic.main.activity_profile.*
-import android.graphics.PorterDuffXfermode
-import android.graphics.Bitmap
-import android.os.AsyncTask
-import android.support.v4.app.ActivityCompat
-import android.support.v4.widget.DrawerLayout
-import android.util.Base64
+import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.app_bar.*
 import org.json.JSONObject
-import java.io.*
+import java.io.BufferedReader
+import java.io.ByteArrayOutputStream
+import java.io.DataOutputStream
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
+class EditProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    //The value of this user determines what will happen when you press on the account button
     var user : User? = null
-    val cont = this
     var photo : String? = null
+    var context : Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_edit_profile)
 
         checkIOPermissions()
 
@@ -59,17 +61,22 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                     Log.i("EMAIL----", user?.email)
                 }
             }
+            if (data.containsKey("photo")){
+                photo = data.getString("photo")
+            }
         }
 
-        //Start thread that fetches the user profile picture
-        val decodeImage = DecodeImage(cont, user)
-        photo = decodeImage.execute().get()
-        println("RESPONSE:::: $photo")
         if (photo != null){
             val decodedString = Base64.decode(photo, Base64.DEFAULT)
             val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-            imageButtonProfilePicture.setImageBitmap(getCroppedBitmap(decodedByte))
+            imageViewEditProfilePic.setImageBitmap(getCroppedBitmap(decodedByte))
         }
+
+        //Set Default Text on the UI Elements
+        editFirstname.text = SpannableStringBuilder(user?.firstname)
+        editLastname.text = SpannableStringBuilder(user?.lastname)
+        editEmail.text = SpannableStringBuilder(user?.email)
+
 
         //Setup navigation drawer and toolbar -- Do not forget to implement Navigation View Listener to class
         val toolBar = findViewById<Toolbar>(R.id.include)
@@ -84,32 +91,21 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
 
         toggle.syncState()
 
-        //Customize the UI Elements based on User information
-        imageButtonProfilePicture.setOnClickListener{
+        imageViewEditProfilePic.setOnClickListener {
             val dialog = DialogProfilePictureOptions()
             dialog.setParent(this)
             dialog.show(fragmentManager, "Profile Options")
         }
-        textViewProfileUsername.text = user?.username
-        textViewProfileName.text = "${user?.firstname} ${user?.lastname}"
-        textViewProfileEmail.text = "Email: ${user?.email}"
 
-        imageButtonEditProfile.setOnClickListener {
-            val editIntent = Intent(this, EditProfile::class.java)
-            editIntent.putExtra("photo", photo)
-            editIntent.putExtra("user", user)
-            startActivity(editIntent)
-        }
-
-        buttonProfileBack.setOnClickListener {
-            finish()
+        buttonSaveEdit.setOnClickListener {
+            saveChanges()
         }
 
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         ActivityStarter.NavigationItemSelected(this, user, item)
-        Log.i("NAVIGATION:::", "" + item.toString())
+
         return false
     }
 
@@ -146,10 +142,10 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
             0-> {
                 if (resultCode == Activity.RESULT_OK && data != null){
                     val profilePic = getCroppedBitmap(data.extras.get("data") as Bitmap)
-                    imageButtonProfilePicture.setImageBitmap(profilePic)
+                    imageViewEditProfilePic.setImageBitmap(profilePic)
                     val save = Save()
                     save.SaveImage(applicationContext, profilePic)
-                    val encodeImage = EncodeImage(cont, user)
+                    val encodeImage = EncodeImage(context, user)
                     encodeImage.execute(profilePic)
 
                 }
@@ -160,9 +156,9 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                     val imageStream = contentResolver.openInputStream(imageUri)
                     val profilePic = BitmapFactory.decodeStream(imageStream)
                     val save = Save()
-                    imageButtonProfilePicture.setImageBitmap(getCroppedBitmap(profilePic))
+                    imageViewEditProfilePic.setImageBitmap(getCroppedBitmap(profilePic))
                     save.SaveImage(applicationContext, profilePic)
-                    val encodeImage = EncodeImage(cont, user)
+                    val encodeImage = EncodeImage(context, user)
                     encodeImage.execute(profilePic)
 
                 }
@@ -264,44 +260,68 @@ class Profile : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    private class DecodeImage(context: Context, user : User?) : AsyncTask<Void?, Void, String?>() {
-
-        private var context = context
-        private var user = user
-
-        override fun doInBackground(vararg bitmap : Void?): String? {
-
-            var temp : String? = null
-
-            try {
-                val url: URL
-                url = URL("https://foodbarbaz.herokuapp.com/getPhoto/${user?.id}")
-
-                val urlConnection = url.openConnection() as HttpURLConnection
-                urlConnection.requestMethod = "GET"
-                urlConnection.setRequestProperty("User-Agent", "")
-                urlConnection.doInput = true
-                urlConnection.doOutput = true
-
-                val inputStream = urlConnection.inputStream
-                val responseBuffer = BufferedReader(InputStreamReader(inputStream))
-                temp = responseBuffer.readLine()
-
-                Log.i("RESPONSE:::", urlConnection.responseCode.toString() + "")
-
-                urlConnection.disconnect()
-            } catch (e: Exception) {
-                Log.e("URL EXCEPTION", e.toString())
-            }
-
-            return temp
-        }
-    }
-
     fun getPhotoFromGallery(){
         val photoPickerIntent = Intent(Intent.ACTION_GET_CONTENT)
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, 1)
+    }
+
+    fun saveChanges(){
+        val thread = Thread(object : Runnable {
+            internal var response: Long? = null
+
+            override fun run() {
+                try {
+                    val url = URL("https://foodbarbaz.herokuapp.com/edit")
+                    val conn = url.openConnection() as HttpURLConnection
+                    conn.requestMethod = "POST"
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8")
+                    conn.setRequestProperty("Accept", "application/json")
+                    conn.doOutput = true
+                    conn.doInput = true
+
+                    val jsonParam = JSONObject()
+                    jsonParam.put("id", user?.id)
+                    jsonParam.put("firstname", editFirstname.getText().toString())
+                    jsonParam.put("lastname", editLastname.getText().toString())
+                    jsonParam.put("email", editEmail.getText().toString())
+
+
+                    Log.i("JSON", jsonParam.toString())
+                    val os = DataOutputStream(conn.outputStream)
+                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                    os.writeBytes(jsonParam.toString())
+
+                    os.flush()
+
+                    Log.i("STATUS", conn.responseCode.toString())
+                    Log.i("MSG", conn.responseMessage)
+
+                    if (conn.responseCode == 200) {
+
+                        user?.firstname = editFirstname.text.toString()
+                        user?.lastname = editLastname.text.toString()
+                        user?.email = editEmail.text.toString()
+
+                        val intent = Intent(applicationContext, Profile::class.java)
+                        intent.putExtra("user", user)
+                        startActivity(intent)
+                    } else {
+                        runOnUiThread {
+                            editFirstname.requestFocus()
+                            editFirstname.setError(getString(R.string.connection_error))
+                        }
+                    }
+
+                    conn.disconnect()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+        })
+
+        thread.start()
     }
 }
 

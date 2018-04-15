@@ -109,7 +109,8 @@ class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        ActivityStarter.NavigationItemSelected(this, user, item)
+        return false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -123,7 +124,7 @@ class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        ActivityStarter.OptionsItemsSelected(this, user, item)
+        ActivityStarter.OptionsItemsSelected(this, user, item, drawer_layout)
 
         return super.onOptionsItemSelected(item)
     }
@@ -204,51 +205,6 @@ class FriendProfile : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-   /* private class GetFriendInfo(friendId : Long?) : AsyncTask <Void?, Void, User?>(){
-
-        val friendId : Long? = friendId
-        internal var response : String = ""
-        var temp : User? = null
-
-        override fun doInBackground(vararg bitmap : Void?): User? {
-
-            try {
-                val url: URL
-                url = URL("http://192.168.1.5:8080/getUser/$friendId")
-
-                val urlConnection = url.openConnection() as HttpURLConnection
-                urlConnection.requestMethod = "GET"
-                urlConnection.setRequestProperty("User-Agent", "")
-                urlConnection.doInput = true
-                urlConnection.doOutput = true
-
-                val inputStream = urlConnection.inputStream
-                val responseBuffer = BufferedReader(InputStreamReader(inputStream))
-
-                var myLine: String? = null
-                val strBuilder = StringBuilder()
-
-
-                while ({ myLine = responseBuffer.readLine(); myLine }() != null) {
-                    System.out.println(myLine)
-                    strBuilder.append(myLine)
-                }
-
-                Log.i("RESPONSE:::", urlConnection.responseCode.toString() + "")
-
-                urlConnection.disconnect()
-            } catch (e: Exception) {
-                Log.e("URL EXCEPTION", e.toString())
-            }
-
-            val type = object : TypeToken<User>() {}.type
-            val gson = Gson()
-            temp = gson.fromJson<User>(response, type)
-
-            return temp
-        }
-
-    }*/
 }
 
 

@@ -7,18 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context="yevoli.release.yev.foodbarbaz.Settings">
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/navigation_header"
-        app:menu="@menu/navigation_menu">
-
-    </android.support.design.widget.NavigationView>
+    tools:context="yevoli.release.yev.foodbarbaz.Settings"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,29 +22,119 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/in_dev"
+            android:id="@+id/textViewSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/in_development"
+            android:text="@string/settings"
             android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="italic"
+            android:textSize="25sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/context_relative_text"
+        <TableLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <TableRow android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/textViewDarkMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dark_mode"
+                    android:textSize="25sp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"
+                    android:layout_weight="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ToggleButton
+                    android:id="@+id/toggleDarkMode"
+                    android:layout_marginEnd="10dp"
+                    />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_profile"
+                    android:textSize="25sp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"
+                    android:layout_weight="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonSettingsEdit"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/darkGrey"
+                    android:padding="8dp"
+                    android:background="@color/teal"/>
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete_account"
+                    android:textSize="25sp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"
+                    android:layout_weight="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonDeleteAccount"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/delete"
+                    android:textColor="@color/darkGrey"
+                    android:padding="8dp"
+                    android:background="@color/teal"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
             android:layout_height="wrap_content"
-            android:text="@string/in_x_activity"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="wrap_content"
+            android:id="@+id/buttonSettingsBack"
+            android:layout_marginEnd="10dp"
+            android:text="@string/delete"
+            android:textColor="@color/darkGrey"
+            android:padding="18dp"
+            android:background="@color/teal"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"/>
+
+
     </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/navigation_menu">
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

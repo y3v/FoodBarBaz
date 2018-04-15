@@ -59,6 +59,7 @@ public class RestaurantMenu extends AppCompatActivity implements NavigationView.
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
@@ -124,36 +125,7 @@ public class RestaurantMenu extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
-        Intent intent = new Intent(this, Settings.class);
-        String buttonPressed = "";
-        int id = item.getItemId();
-
-        Log.i("" + id, "jasldkfj");
-        switch (id){
-            case R.id.about_us_drawer:
-                buttonPressed = "About us";
-                break;
-
-            case R.id.favourites_drawer:
-                buttonPressed = "Favourites";
-                break;
-
-            case R.id.app_settings_drawer:
-                buttonPressed = "Settings";
-                break;
-
-            case R.id.history_drawer:
-                buttonPressed = "History";
-                break;
-
-            case R.id.report_drawer:
-                buttonPressed = "Report";
-                break;
-        }
-
-        intent.putExtra("navigation", buttonPressed);
-        intent.putExtra("user", user);
-        startActivity(intent);
+        ActivityStarter.NavigationItemSelected(this, user, item);
 
         return false;
     }
@@ -171,22 +143,8 @@ public class RestaurantMenu extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        ActivityStarter.OptionsItemsSelected(this, user, item);
+        ActivityStarter.OptionsItemsSelected(this, user, item, drawerLayout);
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void accountPressed(){
-        if (user == null){
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-        }
-        else{
-            //TO DO: set up intent for Display Accounts page!
-            Intent intent = new Intent(this, Profile.class);
-            intent.putExtra("user", user);
-            startActivity(intent);
-            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-        }
     }
 }

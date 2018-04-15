@@ -7,37 +7,39 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 4) {
+class AutoLoginHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 4) {
 
 
     override fun onCreate(db: SQLiteDatabase) {
-        println("CREATING DATABASE!")
-        val query = "create table fav(ID integer primary key autoincrement, name text, user_id integer)"
+        val query = "create table $TABLE_NAME(ID integer primary key autoincrement, user_id integer, username text, password test, fname text, lname text, email text)"
         Log.i("DATABASE:::", "CREATED")
-        val ret = db.execSQL(query)
+        db.execSQL(query)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, i: Int, i1: Int) {
-        val query = "DROP TABLE IF EXISTS fav"
-        println("TABLE UPDATED")
+        val query = "DROP TABLE IF EXISTS $TABLE_NAME"
         db.execSQL(query)
         onCreate(db)
     }
 
-    fun getData (id : Long) : Cursor {
+    fun getData () : Cursor {
         val db = this.writableDatabase
-        val result = db.rawQuery("select * from $TABLE_NAME where user_id=$id", null)
+        val result = db.rawQuery("select * from $TABLE_NAME", null)
 
         return result
     }
 
-    fun insertEntry(name: String, id : Long): Boolean {
+    fun insertEntry(id : Long, username: String, password: String, fname: String, lname: String, email: String): Boolean {
         var ret = false
 
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(RNAME, name)
         contentValues.put("user_id", id)
+        contentValues.put("username", username)
+        contentValues.put("password", password)
+        contentValues.put("fname", fname)
+        contentValues.put("lname", lname)
+        contentValues.put("email", email)
         val res = db.insert(TABLE_NAME, null, contentValues)
 
         if (res != -1L) {
@@ -47,11 +49,11 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return ret
     }
 
-    fun deleteEntry(name: String, id: Long): Boolean {
+    fun deleteEntry(id: Long): Boolean {
         var ret = false
 
         val db = this.writableDatabase
-        val res = db.delete(TABLE_NAME, "name = '$name' and user_id=$id;", null).toLong()
+        val res = db.delete(TABLE_NAME, "user_id=$id;", null).toLong()
 
         if (res != -1L) {
             ret = true
@@ -65,7 +67,7 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
         val db = this.writableDatabase
         val content = ContentValues()
-        content.put(RNAME, newNote)
+        //content.put(QUERY, newNote)
         val res = db.update(TABLE_NAME, content, "query ='$note';", null).toLong()
 
         if (res != -1L) {
@@ -78,8 +80,7 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     companion object {
 
         val DATABASE_NAME = "foodbarbaz"
-        val TABLE_NAME = "fav"
+        val TABLE_NAME = "auto_login"
         val ID = "id"
-        val RNAME = "name"
     }
 }

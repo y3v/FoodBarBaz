@@ -7,19 +7,17 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 4) {
+class ThemeHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 4) {
 
 
     override fun onCreate(db: SQLiteDatabase) {
-        println("CREATING DATABASE!")
-        val query = "create table fav(ID integer primary key autoincrement, name text, user_id integer)"
+        val query = "create table $TABLE_NAME(ID integer primary key autoincrement, query text, user_id integer)"
         Log.i("DATABASE:::", "CREATED")
-        val ret = db.execSQL(query)
+        db.execSQL(query)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, i: Int, i1: Int) {
-        val query = "DROP TABLE IF EXISTS fav"
-        println("TABLE UPDATED")
+        val query = "DROP TABLE IF EXISTS history"
         db.execSQL(query)
         onCreate(db)
     }
@@ -31,12 +29,12 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return result
     }
 
-    fun insertEntry(name: String, id : Long): Boolean {
+    fun insertQuery(query: String, id : Long): Boolean {
         var ret = false
 
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(RNAME, name)
+        contentValues.put(QUERY, query)
         contentValues.put("user_id", id)
         val res = db.insert(TABLE_NAME, null, contentValues)
 
@@ -47,11 +45,11 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return ret
     }
 
-    fun deleteEntry(name: String, id: Long): Boolean {
+    fun deleteEntry(query: String, id: Long): Boolean {
         var ret = false
 
         val db = this.writableDatabase
-        val res = db.delete(TABLE_NAME, "name = '$name' and user_id=$id;", null).toLong()
+        val res = db.delete(TABLE_NAME, "query = '$query' and user_id=$id;", null).toLong()
 
         if (res != -1L) {
             ret = true
@@ -60,13 +58,13 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return ret
     }
 
-    fun updateEntry(note: String, newNote: String): Boolean {
+    fun updateEntry(id: Long, newNote: String): Boolean {
         var ret = false
 
         val db = this.writableDatabase
         val content = ContentValues()
-        content.put(RNAME, newNote)
-        val res = db.update(TABLE_NAME, content, "query ='$note';", null).toLong()
+        content.put(QUERY, newNote)
+        val res = db.update(TABLE_NAME, content, "user_id=$id;", null).toLong()
 
         if (res != -1L) {
             ret = true
@@ -78,8 +76,8 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     companion object {
 
         val DATABASE_NAME = "foodbarbaz"
-        val TABLE_NAME = "fav"
+        val TABLE_NAME = "theme"
         val ID = "id"
-        val RNAME = "name"
+        val QUERY = "query"
     }
 }

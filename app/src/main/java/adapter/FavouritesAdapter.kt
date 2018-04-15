@@ -1,5 +1,6 @@
 package adapter
 
+import POJO.Favourites
 import POJO.User
 import android.content.Context
 import android.content.Intent
@@ -24,10 +25,19 @@ class FavouritesAdapter(context: Context, objects: List<String>, user: User?) : 
         val inflater = LayoutInflater.from(context)
         val favouritesView = inflater.inflate(R.layout.listview_favourites, viewGroup, false)
 
-        favouritesView.textViewFavourites.text = favs[i]
+        val name = favs[i]
+
+        favouritesView.textViewFavourites.text = name
 
         favouritesView.buttonMenuAgain.setOnClickListener {
             Toast.makeText(context, "See Menu", Toast.LENGTH_SHORT).show()
+        }
+
+        favouritesView.buttonDeleteFavourite.setOnClickListener {
+            Favourites.removeFromList(name, user?.id)
+            Favourites.getList(context,user?.id).remove(name)
+            Toast.makeText(context, "$name removed from Favourites!", Toast.LENGTH_SHORT).show()
+            this.notifyDataSetChanged()
         }
 
         return favouritesView

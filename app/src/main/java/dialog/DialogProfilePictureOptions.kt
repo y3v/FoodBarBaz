@@ -20,15 +20,16 @@ import android.app.Activity
 import android.support.v4.app.NotificationCompat.getExtras
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_profile.*
+import yevoli.release.yev.foodbarbaz.EditProfile
 import yevoli.release.yev.foodbarbaz.Profile
 
 
 @Suppress("DEPRECATION")
 class DialogProfilePictureOptions : DialogFragment() {
 
-    var profile : Profile? = null
+    var profile : Activity? = null
 
-    fun setParent(profile : Profile?){
+    fun setParent(profile : Activity?){
         this.profile = profile
     }
 
@@ -44,13 +45,23 @@ class DialogProfilePictureOptions : DialogFragment() {
                         0->{
                             //GALLERY
                             println("USING GALLERY")
-                            profile?.getPhotoFromGallery()
+                            if (profile is Profile){
+                                (profile as Profile)?.getPhotoFromGallery()
+                            }
+                            else{
+                                (profile as EditProfile)?.getPhotoFromGallery()
+                            }
 
                         }
                         1->{
                             //CAMERA
                             println("USING CAMERA")
-                            profile?.takePicture()
+                            if (profile is Profile){
+                                (profile as Profile)?.takePicture()
+                            }
+                            else{
+                                (profile as EditProfile)?.takePicture()
+                            }
                         }
                     }
                 })

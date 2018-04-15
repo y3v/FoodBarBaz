@@ -162,7 +162,8 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        ActivityStarter.NavigationItemSelected(this, user, item)
+        return false
     }
 
 
@@ -179,7 +180,7 @@ class Following : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        ActivityStarter.OptionsItemsSelected(this, user, item)
+        ActivityStarter.OptionsItemsSelected(this, user, item, drawer_layout)
 
         return super.onOptionsItemSelected(item)
     }

@@ -53,6 +53,8 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolBar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -148,42 +150,14 @@ public class RegisterUser extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ActivityStarter.OptionsItemsSelected(this, null, item);
+        ActivityStarter.OptionsItemsSelected(this, null, item, drawerLayout);
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(this, Settings.class);
-        String buttonPressed = "";
-        int id = item.getItemId();
-
-        Log.i("" + id, "jasldkfj");
-        switch (id){
-            case R.id.about_us_drawer:
-                buttonPressed = "About us";
-                break;
-
-            case R.id.favourites_drawer:
-                buttonPressed = "Favourites";
-                break;
-
-            case R.id.app_settings_drawer:
-                buttonPressed = "Settings";
-                break;
-
-            case R.id.history_drawer:
-                buttonPressed = "History";
-                break;
-
-            case R.id.report_drawer:
-                buttonPressed = "Report";
-                break;
-        }
-
-        intent.putExtra("navigation", buttonPressed);
-        startActivity(intent);
+        ActivityStarter.NavigationItemSelected(this, null, item);
 
         return false;
     }

@@ -98,11 +98,13 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> implements O
         rating.setText(restaurant.getRating() + "/5");
 
         //Cycle through favourites, turn on the favourites icon if true
-        for (String s: Favourites.getList(getContext(),user.getId())) {
-            Log.i("FAV:", name.getText().toString() + '/' + s);
-            if (name.getText().toString().equals(s)){
-                favorited.setBackground(getContext().getDrawable(R.drawable.favs_on));
-                favorited.setChecked(true);
+        if (user != null){
+            for (String s: Favourites.getList(getContext(),user.getId())) {
+                Log.i("FAV:", name.getText().toString() + '/' + s);
+                if (name.getText().toString().equals(s)){
+                    favorited.setBackground(getContext().getDrawable(R.drawable.favs_on));
+                    favorited.setChecked(true);
+                }
             }
         }
 

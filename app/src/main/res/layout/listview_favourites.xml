@@ -32,4 +32,16 @@
         android:textColor="@color/darkTeal"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/buttonDeleteFavourite"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_button_teal"
+        android:textColor="@color/darkTeal"
+        android:textStyle="bold" />
+
 </android.widget.LinearLayout>

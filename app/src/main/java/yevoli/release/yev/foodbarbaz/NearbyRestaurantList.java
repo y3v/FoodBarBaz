@@ -76,6 +76,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         final TextView title = findViewById(R.id.nearby_restaurant_title);
         ProgressBar mProgressView = findViewById(R.id.restoProgress);
@@ -175,7 +176,7 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ActivityStarter.OptionsItemsSelected(this, user, item);
+        ActivityStarter.OptionsItemsSelected(this, user, item, drawerLayout);
 
         return super.onOptionsItemSelected(item);
     }
@@ -227,51 +228,9 @@ public class NearbyRestaurantList extends AppCompatActivity implements Navigatio
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(this, Settings.class);
-        String buttonPressed = "";
-        int id = item.getItemId();
-
-        Log.i("" + id, "jasldkfj");
-        switch (id){
-            case R.id.about_us_drawer:
-                buttonPressed = "About us";
-                break;
-
-            case R.id.favourites_drawer:
-                buttonPressed = "Favourites";
-                break;
-
-            case R.id.app_settings_drawer:
-                buttonPressed = "Settings";
-                break;
-
-            case R.id.history_drawer:
-                buttonPressed = "History";
-                break;
-
-            case R.id.report_drawer:
-                buttonPressed = "Report";
-                break;
-        }
-
-        intent.putExtra("navigation", buttonPressed);
-        intent.putExtra("user", user);
-        startActivity(intent);
+        ActivityStarter.NavigationItemSelected(this, user, item);
 
         return false;
-    }
-
-    private void accountPressed(){
-        if (user == null){
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-        }
-        else{
-            Intent intent = new Intent(this, Profile.class);
-            intent.putExtra("user", user);
-            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-        }
     }
 
 }

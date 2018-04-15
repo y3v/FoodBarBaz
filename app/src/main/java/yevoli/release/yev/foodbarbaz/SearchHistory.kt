@@ -67,7 +67,9 @@ class SearchHistory : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        ActivityStarter.NavigationItemSelected(this, user, item)
+
+        return false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,21 +83,10 @@ class SearchHistory : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        ActivityStarter.OptionsItemsSelected(this, user, item)
+        ActivityStarter.OptionsItemsSelected(this, user, item, drawer_layout)
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun accountPressed() {
-        if (user == null) {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
-        } else {
-            val intent = Intent(this, Profile::class.java)
-            intent.putExtra("user", user)
-            //Toast.makeText(this,"TO DO: DISPLAY ACCOUNTS PAGE", Toast.LENGTH_SHORT).show();
-            startActivity(intent)
-        }
-    }
 }
 

@@ -1,5 +1,6 @@
 package yevoli.release.yev.foodbarbaz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -32,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import POJO.ActivityStarter;
+import POJO.AutoLogin;
 import POJO.Const;
 import POJO.User;
 
@@ -41,6 +43,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ProgressBar progressBarLogin;
+    Context context = this;
 
     TextInputEditText username;
     TextInputEditText password;
@@ -56,6 +59,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
         setSupportActionBar(toolBar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView =findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -123,7 +127,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ActivityStarter.OptionsItemsSelected(this, user, item);
+        ActivityStarter.OptionsItemsSelected(this, user, item, drawerLayout);
         return super.onOptionsItemSelected(item);
     }
 
@@ -194,6 +198,7 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
                     //Start new activity!
                     Log.i("LOGIN UN:" , user.getUsername());
                     Log.i("LOGIN PW:" , user.getPassword());
+                    AutoLogin.addToDb(context, user);
                     Intent intent = new Intent(getApplicationContext(), HomePage.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
@@ -216,36 +221,8 @@ public class Login extends AppCompatActivity implements NavigationView.OnNavigat
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(this, Settings.class);
-        String buttonPressed = "";
-        int id = item.getItemId();
-
-        Log.i("" + id, "jasldkfj");
-        switch (id){
-            case R.id.about_us_drawer:
-                buttonPressed = "About us";
-                break;
-
-            case R.id.favourites_drawer:
-                buttonPressed = "Favourites";
-                break;
-
-            case R.id.app_settings_drawer:
-                buttonPressed = "Settings";
-                break;
-
-            case R.id.history_drawer:
-                buttonPressed = "History";
-                break;
-
-            case R.id.report_drawer:
-                buttonPressed = "Report";
-                break;
-        }
-
-        intent.putExtra("navigation", buttonPressed);
-        intent.putExtra("user", user);
-        startActivity(intent);
+        ActivityStarter.NavigationItemSelected(this, user, item);
+        Log.i("NAVIGATION:::", "" + item.toString());
 
         return false;
     }
