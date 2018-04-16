@@ -78,12 +78,6 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
 
         final ToggleButton toggleButton = findViewById(R.id.toggleDarkMode);
         Button backButton = findViewById(R.id.buttonSettingsBack);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityStarter.startHomepage(settings, user);
-            }
-        });
 
         if (ThemeHandler.getTheme(this,user.getId()).equals("dark")){
             toggleButton.setChecked(true);
@@ -103,10 +97,17 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                 Log.i("THEME:::", ThemeHandler.getTheme(getApplicationContext(), user.getId()));
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityStarter.startHomepage(settings, user);
+            }
+        });
     }
 
     private void setLightTheme(){
-        setContentView(R.layout.navigation_drawer);
+        setContentView(R.layout.activity_settings);
         toolBar = findViewById(R.id.include);
         setSupportActionBar(toolBar);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -119,7 +120,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
 
     private void setDarkTheme(){
         setTheme(R.style.Theme_AppCompat);
-        setContentView(R.layout.navigation_drawer);
+        setContentView(R.layout.activity_settings);
         toolBar = findViewById(R.id.include);
         toolBar.setVisibility(View.GONE);
         drawerLayout = findViewById(R.id.drawer_layout);
