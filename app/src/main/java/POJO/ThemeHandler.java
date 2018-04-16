@@ -15,32 +15,27 @@ public class ThemeHandler {
     }
 
     public static String getTheme(Context context, Long id){
-        if (theme == null){
-            Log.i("Theme:", "NULLLLLL");
-            getValuesFromDB(context, id);
-        }
+
+        getValuesFromDB(context, id);
+
         return theme;
     }
 
-    public static void changeTheme(Long id, Context context){
+    public static void addTheme(String t, Long id, Context context){
         myDb = new ThemeHelper(context);
-        theme = getTheme(context, id);
-        if (theme == null){
-            if (theme.equals("dark")){
-                Boolean ret = myDb.updateEntry(id,"light");
-            }
-            else if (theme.equals("light")){
-                Boolean ret = myDb.updateEntry(id, "dark");
-            }
+        getValuesFromDB(context, id);
+        if (theme != null){
+            Boolean ret = myDb.insertQuery(t, id);
         }
         else{
             myDb.insertQuery("light", id);
         }
+        theme = getTheme(context, id);
     }
 
-    public static void removeFromList(String value, Long id){
-
-        Boolean ret = myDb.deleteEntry(value, id);
+    public static void removeTheme(Context context, Long id){
+        myDb = new ThemeHelper(context);
+        Boolean ret = myDb.deleteEntry(id);
         if (ret){
             Log.i("DELETE", " SUCCEEDED!!!");
         }
@@ -57,7 +52,7 @@ public class ThemeHandler {
         }
         else{
             while(res.moveToNext()){
-                theme = res.getString(2);
+                theme = res.getString(1);
             }
         }
     }

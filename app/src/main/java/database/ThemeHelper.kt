@@ -7,17 +7,17 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class ThemeHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 4) {
+class ThemeHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 7) {
 
 
     override fun onCreate(db: SQLiteDatabase) {
-        val query = "create table $TABLE_NAME(ID integer primary key autoincrement, query text, user_id integer)"
-        Log.i("DATABASE:::", "CREATED")
+        val query = "create table theme(ID integer primary key autoincrement, query text, user_id integer)"
+        Log.i("DATABASE THEME:::", "CREATED")
         db.execSQL(query)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, i: Int, i1: Int) {
-        val query = "DROP TABLE IF EXISTS history"
+        val query = "DROP TABLE IF EXISTS theme"
         db.execSQL(query)
         onCreate(db)
     }
@@ -45,11 +45,11 @@ class ThemeHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, n
         return ret
     }
 
-    fun deleteEntry(query: String, id: Long): Boolean {
+    fun deleteEntry(id: Long): Boolean {
         var ret = false
 
         val db = this.writableDatabase
-        val res = db.delete(TABLE_NAME, "query = '$query' and user_id=$id;", null).toLong()
+        val res = db.delete(TABLE_NAME, "user_id=$id;", null).toLong()
 
         if (res != -1L) {
             ret = true
@@ -75,7 +75,7 @@ class ThemeHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, n
 
     companion object {
 
-        val DATABASE_NAME = "foodbarbaz"
+        val DATABASE_NAME = "foodbarbaz_theme"
         val TABLE_NAME = "theme"
         val ID = "id"
         val QUERY = "query"

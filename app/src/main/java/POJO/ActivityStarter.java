@@ -160,8 +160,9 @@ public class ActivityStarter {
                         activity instanceof SearchHistory ||
                         activity instanceof FriendProfile ||
                         activity instanceof EditProfile ||
-                        activity instanceof Profile){
-                    startHomepage(activity, user);
+                        activity instanceof Profile ||
+                        activity instanceof Settings){
+                    startHomepage(activity, null);
                 }
                 else {
                     //Refresh

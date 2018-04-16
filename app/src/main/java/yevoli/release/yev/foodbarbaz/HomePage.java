@@ -46,6 +46,7 @@ import java.util.Date;
 import POJO.ActivityStarter;
 import POJO.AutoLogin;
 import POJO.GeolocationService;
+import POJO.ThemeHandler;
 import POJO.User;
 import POJO.UserLocation;
 import POJO.WebserviceActions;
@@ -64,9 +65,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        setTheme(R.style.Theme_AppCompat);
-
         //If user is logged in, or just registered, the User object will be created
         Bundle data = getIntent().getExtras();
         if (data != null) {
@@ -87,28 +85,29 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             user = AutoLogin.getUser(this);
         }
 
+        //Check which theme is enabled
+        if (user != null){
+            String theme = ThemeHandler.getTheme(this, user.getId());
+            if (theme != null){
+                if (theme.equals("dark")){
+                    Log.i("THEME---", "DARK");
+                    setDarkTheme();
+                }
+                else{
+                    Log.i("THEME---", "LIGHT");
+                    setLightTheme();
+                }
+            }
+            else{
+                Log.i("THEME---", "LIGHT");
+                setLightTheme();
+            }
+        }else{
+            Log.i("THEME---", "LIGHT");
+            setLightTheme();
+        }
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation_drawer);
-
-        toolBar = findViewById(R.id.include);
-        //setSupportActionBar(toolBar);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.closed_drawer);
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
-
-        toolBar.setVisibility(View.GONE);
-
-        toggle.syncState();
 
         Log.i("ON CREATE", "SHOULD BE HERE ONCREATE");
 
@@ -116,6 +115,33 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         if (isLocationOn())
             getCurrentLocation();
+    }
+
+    private void setLightTheme(){
+        setContentView(R.layout.navigation_drawer);
+        toolBar = findViewById(R.id.include);
+        setSupportActionBar(toolBar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView =findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar, R.string.open_drawer, R.string.closed_drawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void setDarkTheme(){
+        setTheme(R.style.Theme_AppCompat);
+        setContentView(R.layout.navigation_drawer);
+        toolBar = findViewById(R.id.include);
+        toolBar.setVisibility(View.GONE);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.closed_drawer);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     @Override
