@@ -34,20 +34,42 @@
                     android:id="@+id/bug_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:text="Report a bug"
                     android:textAlignment="center"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/bug_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:ems="10"
+                    android:hint="Which part of the app?"
+                    android:inputType="textPersonName"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/describe_bug"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Bug description :"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
                     android:id="@+id/bug_description"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="0dp"
                     android:ems="10"
+                    android:gravity="top"
                     android:hint="Describe the bug"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textAlignment="textStart" />
 
                 <Button
                     android:id="@+id/submit_bug_report"

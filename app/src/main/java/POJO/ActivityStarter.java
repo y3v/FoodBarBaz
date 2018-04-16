@@ -122,6 +122,7 @@ public class ActivityStarter {
                 break;
 
             case R.id.report_drawer:
+                ((DrawerLayout)activity.findViewById(R.id.drawer_layout)).closeDrawers();
                 Intent bugIntent = new Intent(activity, ReportBug.class);
                 bugIntent.putExtra("user", user);
                 activity.startActivity(bugIntent);
