@@ -79,8 +79,10 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         final ToggleButton toggleButton = findViewById(R.id.toggleDarkMode);
         Button backButton = findViewById(R.id.buttonSettingsBack);
 
-        if (ThemeHandler.getTheme(this,user.getId()).equals("dark")){
-            toggleButton.setChecked(true);
+        if (ThemeHandler.getTheme(this,user.getId()) != null) {
+            if (ThemeHandler.getTheme(this, user.getId()).equals("dark")) {
+                toggleButton.setChecked(true);
+            }
         }
 
         toggleButton.setOnClickListener(new View.OnClickListener() {
