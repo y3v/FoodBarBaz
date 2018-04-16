@@ -148,17 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:text="@string/placeholder"
-                        android:textSize="25sp"
-                        android:textAlignment="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/textViewProfileCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:text="@string/placeholder"
-                        android:textSize="25sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"
                         />
 

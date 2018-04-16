@@ -90,7 +90,16 @@ public class ActivityStarter {
                 break;
 
             case R.id.app_settings_drawer:
-                startSettingsActivity(activity, user);
+                if (user != null){
+                    startSettingsActivity(activity, user);
+                }
+                else if (!(activity instanceof  Login)){
+                    Toast.makeText(activity, "Please Log in!", Toast.LENGTH_SHORT).show();
+                    startLoginActivity(activity);
+                }
+                else{
+                    Toast.makeText(activity, "Please Log in!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.history_drawer:
@@ -134,10 +143,28 @@ public class ActivityStarter {
                 counter++;
                 break;
             case R.id.action_settings:
-                Toast.makeText(activity,"Settings Clicked", Toast.LENGTH_SHORT).show();
+                if (user != null){
+                    startSettingsActivity(activity, user);
+                }
+                else if (!(activity instanceof  Login)){
+                    Toast.makeText(activity, "Please Log in!", Toast.LENGTH_SHORT).show();
+                    startLoginActivity(activity);
+                }
+                else{
+                    Toast.makeText(activity, "Please Log in!", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.action_favs:
-                Toast.makeText(activity,"Favourites Clicked", Toast.LENGTH_SHORT).show();
+                if (user != null){
+                    startFavouritesActivity(activity, user);
+                }
+                else if (!(activity instanceof  Login)){
+                    Toast.makeText(activity, "Please Log in!", Toast.LENGTH_SHORT).show();
+                    startLoginActivity(activity);
+                }
+                else{
+                    Toast.makeText(activity, "Please Log in!", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.account:
                 accountPressed(activity, user);
@@ -154,7 +181,7 @@ public class ActivityStarter {
                 AutoLogin.removeUser(user.getId());
                 Toast.makeText(activity, R.string.user_logged_out, Toast.LENGTH_SHORT).show();
                 user = null;
-                activity.getIntent().removeExtra("user");
+                activity.getIntent().putExtra("user", (User) null);
                 if (activity instanceof Following ||
                         activity instanceof Favourites ||
                         activity instanceof SearchHistory ||
