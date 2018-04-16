@@ -19,6 +19,7 @@ import yevoli.release.yev.foodbarbaz.HomePage;
 import yevoli.release.yev.foodbarbaz.Login;
 import yevoli.release.yev.foodbarbaz.Profile;
 import yevoli.release.yev.foodbarbaz.R;
+import yevoli.release.yev.foodbarbaz.ReportBug;
 import yevoli.release.yev.foodbarbaz.SearchHistory;
 import yevoli.release.yev.foodbarbaz.Settings;
 
@@ -57,6 +58,12 @@ public class ActivityStarter {
 
     public static void startSettingsActivity(Activity activity, User user){
         Intent intent = new Intent(activity, Settings.class);
+        intent.putExtra("user", user);
+        activity.startActivity(intent);
+    }
+
+    public static void startBugReportActivity(Activity activity, User user){
+        Intent intent = new Intent(activity, ReportBug.class);
         intent.putExtra("user", user);
         activity.startActivity(intent);
     }
@@ -106,6 +113,9 @@ public class ActivityStarter {
                 break;
 
             case R.id.report_drawer:
+                Intent bugIntent = new Intent(activity, ReportBug.class);
+                bugIntent.putExtra("user", user);
+                activity.startActivity(bugIntent);
                 break;
         }
     }

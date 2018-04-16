@@ -56,7 +56,7 @@
 
         <activity
             android:name="io.kickflip.sdk.activity.BroadcastActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -68,8 +68,9 @@
         <activity android:name=".FriendProfile" />
         <activity android:name=".SearchHistory" />
         <activity android:name=".Favourites" />
-        <activity android:name=".BroadcastActivity"></activity>
-        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".BroadcastActivity" />
+        <activity android:name=".EditProfile" />
+        <activity android:name=".ReportBug"></activity>
     </application>
 
 </manifest>
