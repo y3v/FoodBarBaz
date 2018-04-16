@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/buttonSettingsBack"
             android:layout_marginEnd="10dp"
-            android:text="@string/delete"
+            android:text="@string/apply_changes"
             android:textColor="@color/darkGrey"
             android:padding="18dp"
             android:background="@color/teal"

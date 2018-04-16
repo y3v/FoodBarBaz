@@ -151,7 +151,7 @@ public class ActivityStarter {
                         activity instanceof FriendProfile ||
                         activity instanceof EditProfile ||
                         activity instanceof Profile){
-                    startHomepage(activity, user);
+                    startHomepage(activity, null);
                 }
                 else {
                     //Refresh

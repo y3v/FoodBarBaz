@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class AutoLoginHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 4) {
+class AutoLoginHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 7) {
 
 
     override fun onCreate(db: SQLiteDatabase) {
