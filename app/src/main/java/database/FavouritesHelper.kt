@@ -77,7 +77,7 @@ class FavouritesHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     companion object {
 
-        val DATABASE_NAME = "foodbarbaz"
+        val DATABASE_NAME = "foodbarbaz_fav"
         val TABLE_NAME = "fav"
         val ID = "id"
         val RNAME = "name"

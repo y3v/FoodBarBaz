@@ -79,7 +79,7 @@ class AutoLoginHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     companion object {
 
-        val DATABASE_NAME = "foodbarbaz"
+        val DATABASE_NAME = "foodbarbaz_autologin"
         val TABLE_NAME = "auto_login"
         val ID = "id"
     }
